@@ -1,0 +1,51 @@
+<p v-text="msg"></p>
+<div class="row">
+    <div class="st-col col-12 col-sm st-module">
+        <div class="row">
+            <div id="ipixn" class="st-col col-12 col-sm st-module">
+                <h6>Instructions:<br>​​​​​​​<br>1. Input Data Forecast by typing or importing file in .csv format<br>2. Customise Options &amp; Costs to your preference<br>​​​​​​​3. Data will be displayed below automatically.</h6>
+            </div>
+            <div class="st-col col-12 col-sm st-module">
+                <h6>Options</h6>
+                <q-select id="ingb9" :filled="true" label="Planning Period" :options="t" v-model="selected_t"></q-select>
+                <q-select id="ir2ou" :filled="true" label="Allow Backlogging?" :options="backlogging" v-model="selected_backlogging"></q-select>
+            </div>
+            <div id="icaba" class="st-col col-12 col-sm st-module">
+                <q-uploader id="ixnz" accept=".csv" :auto-upload="true" :hide-upload-btn="true" label="Upload Data Forecast" :max-files="3" :multiple="false" :no-thumbnails="true" :url="'/____/upload/' + channel_"></q-uploader>
+            </div>
+        </div>
+        <div class="st-col col-12 col-sm st-module">
+            <div class="row">
+                <div class="st-col col-12 col-sm st-module">
+                    <div class="st-col col-12 col-sm st-module">
+                        <st-big-number id="i5hom" title="Hiring" icon="group_add" :number="c_H" color="positive"></st-big-number>
+                        <q-slider id="ihhtl" color="primary" :label="true" :max="1000" :min="0" :step="10" v-model="c_H"></q-slider>
+                    </div>
+                </div>
+                <div class="st-col col-12 col-sm st-module">
+                    <div class="st-col col-12 col-sm st-module">
+                        <st-big-number id="ikbnn" title="Firing" icon="group_off" :number="c_F" color="negative"></st-big-number>
+                        <q-slider id="ih06g" color="primary" :label="true" :max="1000" :min="1" :step="10" v-model="c_F"></q-slider>
+                    </div>
+                </div>
+                <div class="st-col col-12 col-sm st-module">
+                    <st-big-number id="ifo48" title="Inventory" icon="warehouse" :number="c_I" color="dark"></st-big-number>
+                    <q-slider id="irxfy" color="primary" :label="true" :max="1" :min="0" :step="0.1" v-model="c_I"></q-slider>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="st-col col-12 col-sm st-module">
+                <plotly id="iuoms" data="W3siZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tUfSIsInkiOiIkX3tkZW1hbmR9IiwidHlwZSI6InNjYXR0ZXIiLCJtb2RlIjoibGluZXMiLCJuYW1lIjoiRGVtYW5kIn0seyJnYnR5cGUiOiJMaW5lIENoYXJ0IiwieCI6IiRfe1R9IiwieSI6IiRfe0l9IiwidHlwZSI6InNjYXR0ZXIiLCJtb2RlIjoibGluZXMiLCJuYW1lIjoiSW52ZW50b3J5In0seyJnYnR5cGUiOiJMaW5lIENoYXJ0IiwieCI6IiRfe1R9IiwieSI6IiRfe1B9IiwidHlwZSI6InNjYXR0ZXIiLCJtb2RlIjoibGluZXMiLCJuYW1lIjoiUHJvZHVjdGlvbiJ9XQ==" config="e30=" layout="eyJ0aXRsZSI6IlByb2R1Y3Rpb24iLCJ5YXhpcyI6eyJ0aXRsZSI6eyJ0ZXh0IjoiUXVhbnRpdHkifX0sInhheGlzIjp7InRpdGxlIjp7InRleHQiOiIkX3tzZWxlY3RlZF90fSJ9fX0="></plotly>
+            </div>
+            <div class="row">
+                <div class="st-col col-3 col-sm st-module"></div>
+                <div class="st-col col-9 st-module"></div>
+            </div>
+            <st-big-number id="izhly" title="Total Costs" :number="cost"></st-big-number>
+            <div class="st-col col-12 col-sm st-module">
+                <plotly id="ivxw9" data="W3siZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tUfSIsInkiOiIkX3tXfSIsInR5cGUiOiJzY2F0dGVyIiwibW9kZSI6ImxpbmVzIiwibmFtZSI6IldvcmtlciBMZXZlbCJ9LHsiZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tUfSIsInkiOiIkX3tIfSIsInR5cGUiOiJzY2F0dGVyIiwibW9kZSI6ImxpbmVzIiwibmFtZSI6IkhpcmVkIFdvcmtlcnMifSx7ImdidHlwZSI6IkxpbmUgQ2hhcnQiLCJ4IjoiJF97VH0iLCJ5IjoiJF97Rn0iLCJ0eXBlIjoic2NhdHRlciIsIm1vZGUiOiJudW1iZXIrZGVsdGEiLCJuYW1lIjoiRmlyZWQgV29ya2VycyJ9XQ==" config="e30=" layout="eyJ0aXRsZSI6IldvcmtlcnMiLCJ4YXhpcyI6eyJ0aXRsZSI6eyJ0ZXh0IjoiJF97c2VsZWN0ZWRfdH0ifX0sInlheGlzIjp7InRpdGxlIjp7InRleHQiOiJXb3JrZXJzIn19fQ=="></plotly>
+            </div>
+        </div>
+    </div>
+</div>
