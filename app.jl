@@ -1,4 +1,3 @@
-println("GitHub Test")
 module App
 # set up Genie development environment
 using GenieFramework
