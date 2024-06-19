@@ -1,0 +1,12 @@
+┌ Info: 2024-06-19 20:04:20 Watching ["C:\\Users\\Joe\\OneDrive\\Documents\\GitHub\\LPGenie"]
+└ @ GenieAutoReload C:\Users\Joe\.julia\packages\GenieAutoReload\ESvsh\src\GenieAutoReload.jl:19
+┌ Info: 2024-06-19 20:04:21 Autoreloading
+└ @ GenieAutoReload C:\Users\Joe\.julia\packages\GenieAutoReload\ESvsh\src\GenieAutoReload.jl:22
+┌ Info: 2024-06-19 20:04:45 
+│ Web Server starting at http://127.0.0.1:8000 
+└ @ Genie.Server C:\Users\Joe\.julia\packages\Genie\ddmhZ\src\Server.jl:182
+┌ Info: 2024-06-19 20:04:45 Listening on: 127.0.0.1:8000, thread id: 1
+└ @ HTTP.Servers C:\Users\Joe\.julia\packages\HTTP\sJD5V\src\Servers.jl:382
+┌ Info: 2024-06-19 20:05:31 File was uploaded: 
+│   fileuploads = Dict{AbstractString, AbstractString}("name" => "dummydemand.csv", "channel" => "AGQMUQGEWRAKVIHASAADWAMQTAPPBVZI", "path" => "C:\\Users\\Joe\\AppData\\Local\\Temp\\jl_DMDgjehonO")
+└ @ Main.App C:\Users\Joe\OneDrive\Documents\GitHub\LPGenie\app.jl:96
