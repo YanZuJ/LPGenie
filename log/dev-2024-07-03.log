@@ -1,0 +1,13 @@
+┌ Info: 2024-07-03 12:32:49 Watching ["c:\\Users\\Joe\\OneDrive\\Documents\\GitHub\\LPGenie"]
+└ @ GenieAutoReload C:\Users\Joe\.julia\packages\GenieAutoReload\ESvsh\src\GenieAutoReload.jl:19
+┌ Info: 2024-07-03 12:32:50 Autoreloading
+└ @ GenieAutoReload C:\Users\Joe\.julia\packages\GenieAutoReload\ESvsh\src\GenieAutoReload.jl:22
+┌ Info: 2024-07-03 12:33:08 Watching ["c:\\Users\\Joe\\OneDrive\\Documents\\GitHub\\LPGenie"]
+└ @ GenieAutoReload C:\Users\Joe\.julia\packages\GenieAutoReload\ESvsh\src\GenieAutoReload.jl:19
+┌ Warning: 2024-07-03 12:33:08 Handlers already registered
+└ @ Genie.Watch C:\Users\Joe\.julia\packages\Genie\ddmhZ\src\Watch.jl:52
+┌ Info: 2024-07-03 12:33:11 
+│ Web Server starting at http://127.0.0.1:9101?CHANNEL__=ELMHFVAYWWPFDWLDFUHOSIHWVNZTUEQU 
+└ @ Genie.Server C:\Users\Joe\.julia\packages\Genie\ddmhZ\src\Server.jl:182
+┌ Info: 2024-07-03 12:33:11 Listening on: 127.0.0.1:9101, thread id: 1
+└ @ HTTP.Servers C:\Users\Joe\.julia\packages\HTTP\sJD5V\src\Servers.jl:382
