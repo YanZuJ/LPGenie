@@ -5,6 +5,7 @@ using JuMP
 using HiGHS
 using CSV, DataFrames
 using Random
+
 Random.seed!(1234) # set seed
 import Test
 @genietools
@@ -133,13 +134,13 @@ end
 
     # Initialise optimise function variables, see Backend.ipynb for more info
     @in cost = 0
-    @in worklevel_W = Matrix{Float64}(undef)
-    @in hired_H = Matrix{Float64}(undef)
-    @in fired_F = Matrix{Float64}(undef)
-    @in inventory_I = Matrix{Float64}(undef)
-    @in prodcution_P = Matrix{Float64}(undef)
-    @in overtime_O = Matrix{Float64}(undef)
-    @in backlogging_B = Matrix{Float64}(undef)
+    @in worklevel_W = Matrix{Float64}(undef,4,12)
+    @in hired_H = Matrix{Float64}(undef,4,12)
+    @in fired_F = Matrix{Float64}(undef,4,12)
+    @in inventory_I = Matrix{Float64}(undef,4,12)
+    @in prodcution_P = Matrix{Float64}(undef,4,12)
+    @in overtime_O = Matrix{Float64}(undef,4,12)
+    @in backlogging_B = Matrix{Float64}(undef,4,12)
 
     @onchange cost_hiring_cH,cost_firing_cF,cost_inventory_cI,cost_labour_cR,cost_overtime_cO,cost_backlogging_cB,demand_D, fileuploads begin
         # the values of result and msg in the UI will
