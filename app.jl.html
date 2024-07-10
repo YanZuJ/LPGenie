@@ -7,12 +7,31 @@
         <div class="st-col col-12 col-sm st-module">
             <div class="row">
                 <div id="ipixn" class="st-col col-12 col-sm st-module">
-                    <h6>Instructions:<br>​​​​​​​<br>1. Input Data Forecast by typing or importing file in .csv format<br>2. Customise Options &amp; Costs to your preference<br>​​​​​​​3. Data will be displayed below automatically.</h6>
+                    <h6>Instructions:<br>​​​​​​​<br>1. Input Data Forecast in .csv format<br>2. Customise Options &amp; Costs to your preference<br>​​​​​​​3. Press "Optimise" to start program.&nbsp;<br>4. Export plot image from topright of plots or .csv from the right of the webapp.<br></h6>
                 </div>
                 <div class="st-col col-12 col-sm st-module">
                     <h6>Options</h6>
                     <q-select id="ingb9" :filled="true" label="Select Product" :options="product_names" v-model="selected_product"></q-select>
-                    <q-select id="ir2ou" :filled="true" label="Allow Backlogging?" :options="backlogging" v-model="selected_backlogging"></q-select>
+                    <div class="row">
+                        <div class="st-col col-12 col-sm st-module">
+                            <q-input iscomposite="true" id="ixkjf" :clearable="true" :filled="true" label="Starting Date" v-model="start_date">
+                                <q-icon id="inyy7" class="cursor-pointer" name="event">
+                                    <q-popup-proxy>
+                                        <q-date id="ienif" mask="YYYY-MM-DD" :no-unset="true" :today-btn="true" v-model="start_date"></q-date>
+                                    </q-popup-proxy>
+                                </q-icon>
+                            </q-input>
+                        </div>
+                        <div class="st-col col-12 col-sm st-module">
+                            <q-input iscomposite="true" id="ilant" :clearable="true" :filled="true" label="Ending Date" v-model="end_date">
+                                <q-icon id="ifvmb" class="cursor-pointer" name="event">
+                                    <q-popup-proxy>
+                                        <q-date id="i9xb9" mask="YYYY-MM-DD" :no-unset="true" :today-btn="true" v-model="end_date"></q-date>
+                                    </q-popup-proxy>
+                                </q-icon>
+                            </q-input>
+                        </div>
+                    </div>
                 </div>
                 <div id="icaba" class="st-col col-12 col-sm st-module">
                     <q-uploader id="ixnz" accept=".csv" :auto-upload="true" :hide-upload-btn="true" label="Upload Data Forecast" :max-files="3" :multiple="false" :no-thumbnails="true" :url="'/____/upload/' + channel_"></q-uploader>
@@ -47,29 +66,36 @@
                     <div class="st-col col-12 col-sm st-module">
                         <div class="st-col col-12 col-sm st-module">
                             <st-big-number id="ixpz6" icon="backspace" color="accent" :number="cost_backlogging_cB" title="Backlogging"></st-big-number>
-                            <q-slider id="iett5" color="primary" :label="true" :max="2000" :min="1" :step="10" v-model="cost_firing_cF"></q-slider>
+                            <q-slider id="iett5" color="primary" :label="true" :max="2000" :min="1" :step="10" v-model="cost_backlogging_cB"></q-slider>
                         </div>
                     </div>
                     <div class="st-col col-12 col-sm st-module">
-                        <st-big-number id="ifo48" title="Inventory" icon="warehouse" color="dark" :number="cost_inventory_cI"></st-big-number>
-                        <q-slider id="irxfy" color="primary" :label="true" :max="20" :min="0" :step="0.1" v-model="cost_inventory_cI"></q-slider>
+                        <div class="st-col col-12 col-sm st-module">
+                            <st-big-number id="iw24e" icon="warehouse" color="dark" :number="cost_inventory_cI" title="Inventory"></st-big-number>
+                            <q-slider id="irqzy" color="primary" :label="true" :max="2000" :min="1" :step="10" v-model="cost_inventory_cI"></q-slider>
+                        </div>
+                    </div>
+                    <div class="st-col col-12 col-sm st-module">
+                        <st-big-number id="izhly" title="Total Costs" :number="cost"></st-big-number>
+                        <div class="row justify-center">
+                            <q-btn id="i1a9i" color="primary" text-color="primary" icon="timeline" label="Optimise" v-on:click="press_optimise = true"></q-btn>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="st-col col-12 col-sm st-module">
-                    <plotly id="iuoms" data="W3siZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe2RlbWFuZH0iLCJ0eXBlIjoic2NhdHRlciIsIm1vZGUiOiJsaW5lcyIsIm5hbWUiOiJEZW1hbmQifSx7ImdidHlwZSI6IkxpbmUgQ2hhcnQiLCJ4IjoiJF97VH0iLCJ5IjoiJF97SX0iLCJ0eXBlIjoic2NhdHRlciIsIm1vZGUiOiJsaW5lcyIsIm5hbWUiOiJJbnZlbnRvcnkifSx7ImdidHlwZSI6IkxpbmUgQ2hhcnQiLCJ4IjoiJF97VH0iLCJ5IjoiJF97UH0iLCJ0eXBlIjoic2NhdHRlciIsIm1vZGUiOiJsaW5lcyIsIm5hbWUiOiJQcm9kdWN0aW9uIn1d" config="e30=" layout="eyJ0aXRsZSI6IlByb2R1Y3Rpb24iLCJ5YXhpcyI6eyJ0aXRsZSI6eyJ0ZXh0IjoiUXVhbnRpdHkifX0sInhheGlzIjp7InRpdGxlIjp7InRleHQiOiJEYXRlIn19fQ=="></plotly>
+                    <plotly id="iuoms" data="W3siZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe2RlbWFuZF9wbG90fSIsIm1vZGUiOiJsaW5lcyIsIm5hbWUiOiJEZW1hbmQifSx7ImdidHlwZSI6IkxpbmUgQ2hhcnQiLCJ4IjoiJF97ZGF0ZV9saXN0fSIsInkiOiIkX3tpbnZlbnRvcnlfcGxvdH0iLCJtb2RlIjoibGluZXMiLCJuYW1lIjoiSW52ZW50b3J5In0seyJnYnR5cGUiOiJMaW5lIENoYXJ0IiwieCI6IiRfe2RhdGVfbGlzdH0iLCJ5IjoiJF97cHJvZHVjdGlvbl9wbG90fSIsInR5cGUiOiJzY2F0dGVyIiwibmFtZSI6IlByb2R1Y3Rpb24ifSx7IngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe292ZXJ0aW1lX3Bsb3R9IiwidHlwZSI6InNjYXR0ZXIiLCJuYW1lIjoiT3ZlcnRpbWUifV0=" config="e30=" layout="eyJ0aXRsZSI6IlByb2R1Y3Rpb24iLCJ5YXhpcyI6eyJ0aXRsZSI6eyJ0ZXh0IjoiUXVhbnRpdHkifX0sInhheGlzIjp7InRpdGxlIjp7InRleHQiOiJEYXRlIn19fQ=="></plotly>
                 </div>
                 <div class="row">
                     <div class="st-col col-3 col-sm st-module"></div>
                     <div class="st-col col-9 st-module"></div>
                 </div>
                 <div class="st-col col-12 col-sm st-module">
-                    <plotly id="ivxw9" data="W3siZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe1d9IiwidHlwZSI6InNjYXR0ZXIiLCJtb2RlIjoibGluZXMiLCJuYW1lIjoiV29ya2VyIExldmVsIn0seyJnYnR5cGUiOiJMaW5lIENoYXJ0IiwieCI6IiRfe1R9IiwieSI6IiRfe0h9IiwidHlwZSI6InNjYXR0ZXIiLCJtb2RlIjoibGluZXMiLCJuYW1lIjoiSGlyZWQgV29ya2VycyJ9LHsiZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tUfSIsInkiOiIkX3tGfSIsInR5cGUiOiJzY2F0dGVyIiwibW9kZSI6Im51bWJlcitkZWx0YSIsIm5hbWUiOiJGaXJlZCBXb3JrZXJzIn1d" config="e30=" layout="eyJ0aXRsZSI6IldvcmtlcnMiLCJ4YXhpcyI6eyJ0aXRsZSI6eyJ0ZXh0IjoiRGF0ZSJ9fSwieWF4aXMiOnsidGl0bGUiOnsidGV4dCI6IldvcmtlcnMifX19"></plotly>
+                    <plotly id="ivxw9" data="W3siZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe3dvcmtlcmxldmVsX3Bsb3R9IiwidHlwZSI6InNjYXR0ZXIiLCJuYW1lIjoiV29ya2VyIExldmVsIn0seyJnYnR5cGUiOiJMaW5lIENoYXJ0IiwieCI6IiRfe2RhdGVfbGlzdH0iLCJ5IjoiJF97aGlyZWRfcGxvdH0iLCJ0eXBlIjoic2NhdHRlciIsIm5hbWUiOiJIaXJlZCBXb3JrZXJzIn0seyJnYnR5cGUiOiJMaW5lIENoYXJ0IiwieCI6IiRfe2RhdGVfbGlzdH0iLCJ5IjoiJF97ZmlyZWRfcGxvdH0iLCJ0eXBlIjoic2NhdHRlciIsIm5hbWUiOiJGaXJlZCBXb3JrZXJzIn1d" config="e30=" layout="eyJ0aXRsZSI6IldvcmtlcnMiLCJ4YXhpcyI6eyJ0aXRsZSI6eyJ0ZXh0IjoiRGF0ZSJ9fSwieWF4aXMiOnsidGl0bGUiOnsidGV4dCI6IldvcmtlcnMifX19"></plotly>
                 </div>
             </div>
-            <q-btn id="i1a9i" color="primary" icon="true" label="button" v-on:click=""></q-btn>
+            <div class="row justify-center"></div>
         </div>
     </div>
-    <st-big-number id="izhly" title="Total Costs" :number="cost"></st-big-number>
 </div>
