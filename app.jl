@@ -133,13 +133,13 @@ end
 
     # Initialise optimise function variables, see Backend.ipynb for more info
     @in cost = 0
-    @in worklevel_W = Vector{Vector{Float64}}()
-    @in hired_H = Vector{Vector{Float64}}()
-    @in fired_F = Vector{Vector{Float64}}()
-    @in inventory_I = Vector{Vector{Float64}}()
-    @in prodcution_P = Vector{Vector{Float64}}()
-    @in overtime_O = Vector{Vector{Float64}}()
-    @in backlogging_B = Vector{Vector{Float64}}()
+    @in worklevel_W = 0
+    @in hired_H = 0
+    @in fired_F = 0
+    @in inventory_I = 0
+    @in prodcution_P = 0
+    @in overtime_O = 0
+    @in backlogging_B = 0
 
     @onchange cost_hiring_cH,cost_firing_cF,cost_inventory_cI,cost_labour_cR,cost_overtime_cO,cost_backlogging_cB,demand_D, fileuploads begin
         # the values of result and msg in the UI will
