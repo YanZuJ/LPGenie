@@ -49,18 +49,18 @@ function read_forecast(forecast)
     return num_products_p,time_horizon_T,product_names,demand_D,workdays_n,productivity_K,date_list
 end
 
-function optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity_K,cost_hiring_cH,cost_firing_cF,cost_inventory_cI,cost_labour_cR,cost_overtime_cO,cost_backlogging_cB,product_names,date_list)
+function optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity_K,cost_hiring_cH,cost_firing_cF,cost_inventory_cI,cost_labour_cR,cost_overtime_cO,cost_backlogging_cB,product_names,date_list) #num_machines_M,timetaken_τ
     # Initialize the model
     model = Model(Gurobi.Optimizer)
 
     # Variables
-    @variable(model, workerlevel_W[1:num_products_p,1:time_horizon_T] >= 0)       # Workers
-    @variable(model, hired_H[1:num_products_p,1:time_horizon_T] >= 0)       # Hired workers
-    @variable(model, fired_F[1:num_products_p,1:time_horizon_T] >= 0)       # Fired workers
-    @variable(model, inventory_I[1:num_products_p,1:time_horizon_T] >= 0)       # Inventory as integer variables
-    @variable(model, production_P[1:num_products_p,1:time_horizon_T] >= 0)       # Production
-    @variable(model, overtime_O[1:num_products_p,1:time_horizon_T] >= 0)       # Overtime
-    @variable(model, backlogging_B[1:num_products_p,1:time_horizon_T] >= 0)        # Production
+    @variable(model, workerlevel_W[1:num_products_p,1:time_horizon_T] >= 0, Int)       # Workers
+    @variable(model, hired_H[1:num_products_p,1:time_horizon_T] >= 0, Int)       # Hired workers
+    @variable(model, fired_F[1:num_products_p,1:time_horizon_T] >= 0, Int)       # Fired workers
+    @variable(model, inventory_I[1:num_products_p,1:time_horizon_T] >= 0, Int)       # Inventory as integer variables
+    @variable(model, production_P[1:num_products_p,1:time_horizon_T] >= 0, Int)       # Production
+    @variable(model, overtime_O[1:num_products_p,1:time_horizon_T] >= 0, Int)       # Overtime
+    @variable(model, backlogging_B[1:num_products_p,1:time_horizon_T] >= 0, Int)        # Production
 
     # Objective function: Minimize total cost
     @objective(model, Min, sum(cost_hiring_cH*hired_H + cost_firing_cF*fired_F 
@@ -90,7 +90,11 @@ function optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity
     for p in 1:num_products_p
         for t in 1:time_horizon_T
             @constraint(model, production_P[p,t] 
-            == productivity_K[p] * workdays_n[t] * workerlevel_W[p,t])
+            == productivity_K[p] * workdays_n[t] * workerlevel_W[p,t] + overtime_O[p,t])
+            # for m in 1:num_machines_M
+            #     total_time_taken += timetaken_τ[p][m] * production_P[p, t]
+            # end
+            # @constraint(model, total_time_taken <= workerlevel_W[p, t] * workdays_n[t] * 8)
         end    
     end
 
@@ -140,6 +144,12 @@ end
 
 # add reactive code to make the UI interactive
 @app begin
+    # @out machine_df = CSV.read("dummydata1.csv", DataFrame)
+    # @out timetaken_τ=[]
+    # for col in 2:ncol(machine_df)
+    #     push!(timetaken_τ, machine_df[:,col])
+    # end 
+    # @out num_machines_M = nrow(machine_df)
     # reactive variables are tagged with @in and @out
     @in forecast = DataFrame()
     # Initialise Costs
@@ -176,8 +186,8 @@ end
     @in backlogging_B = Matrix{Float64}(undef,4,12)
 
     # Initialise start and end date to for dropdown
-    @in start_date = "2024-01-01"
-    @in end_date = "2024-06-01"
+    @in start_date = "2023-12-30"
+    @in end_date = "2025-01-02"
 
     @in workerlevel_plot = []
     @in hired_plot = []
@@ -195,12 +205,19 @@ end
 
     # Initialise button state as false, when pressed = true in the UI
     @in press_optimise = false
-    @in isready = false  #isready triggers the initial plots of the first product after optimisation is pressed 
+
+    # Initialise toggle backlogging as false, when toggled = true in UI
+    @in disable_backlogging = false
+    @onchange disable_backlogging begin
+        cost_backlogging_cB = 999999999
+    end
+
+    @in optimisation_ready = false  #optimisation_ready triggers the initial plots of the first product after optimisation is pressed 
     @onbutton press_optimise begin
         @info "Running Optimisation..."
         notify(__model__,"Running Optimisation...") 
-        optimise_result = optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity_K,cost_hiring_cH,cost_firing_cF,cost_inventory_cI,cost_labour_cR,cost_overtime_cO,cost_backlogging_cB, product_names, date_list)
-        elapsed_time = @elapsed optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity_K,cost_hiring_cH,cost_firing_cF,cost_inventory_cI,cost_labour_cR,cost_overtime_cO,cost_backlogging_cB, product_names, date_list)
+        optimise_result = optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity_K,cost_hiring_cH,cost_firing_cF,cost_inventory_cI,cost_labour_cR,cost_overtime_cO,cost_backlogging_cB, product_names, date_list) #num_machines_M,timetaken_τ
+        elapsed_time = @elapsed optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity_K,cost_hiring_cH,cost_firing_cF,cost_inventory_cI,cost_labour_cR,cost_overtime_cO,cost_backlogging_cB, product_names, date_list) #num_machines_M,timetaken_τ
         notify(__model__,"Optimisation Completed. Time taken: $(elapsed_time) seconds")   
         cost = round(Int,optimise_result[1])
         worklevel_W = optimise_result[2]
@@ -214,20 +231,20 @@ end
         production_df = optimise_result[10]
         @info "Optimisation Completed"
         press_optimise = false
-        isready = true
+        optimisation_ready = true
     end
 
-    @onchange selected_product, start_date, end_date, isready begin
+    @onchange selected_product, start_date, end_date, optimisation_ready begin
         # filters the production and worker dataframe, and convert each column into a vector (list) corresponding to the filtered values, see Backend.ipynb for more info
         worker_df_copy = copy(worker_df)
-        filter_worker_df = filter!(row -> row.Product_Name == selected_product &&  start_date < row.Date < end_date, worker_df_copy)
+        filter_worker_df = filter!(row -> row.Product_Name == selected_product &&  start_date <= row.Date <= end_date, worker_df_copy)
         workerlevel_plot = filter_worker_df.Worker_Level
         hired_plot = filter_worker_df.Workers_Hired
         fired_plot = filter_worker_df.Workers_Fired
         print(hired_plot)
 
         production_df_copy = copy(production_df)
-        filter_production_df = filter!(row -> row.Product_Name == selected_product &&  start_date < row.Date < end_date, production_df_copy)
+        filter_production_df = filter!(row -> row.Product_Name == selected_product &&  start_date <= row.Date <= end_date, production_df_copy)
         demand_plot = filter_production_df.Demand
         inventory_plot = filter_production_df.Inventory
         production_plot = filter_production_df.Production
