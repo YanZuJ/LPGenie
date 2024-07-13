@@ -236,12 +236,12 @@ end
 
     @onchange selected_product, start_date, end_date, optimisation_ready begin
         # filters the production and worker dataframe, and convert each column into a vector (list) corresponding to the filtered values, see Backend.ipynb for more info
+        notify(__model__,"Plotting Graphs...")
         worker_df_copy = copy(worker_df)
         filter_worker_df = filter!(row -> row.Product_Name == selected_product &&  start_date <= row.Date <= end_date, worker_df_copy)
         workerlevel_plot = filter_worker_df.Worker_Level
         hired_plot = filter_worker_df.Workers_Hired
         fired_plot = filter_worker_df.Workers_Fired
-        print(hired_plot)
 
         production_df_copy = copy(production_df)
         filter_production_df = filter!(row -> row.Product_Name == selected_product &&  start_date <= row.Date <= end_date, production_df_copy)
@@ -250,6 +250,7 @@ end
         production_plot = filter_production_df.Production
         overtime_plot = filter_production_df.Overtime
         backlogging_plot = filter_production_df.Backlogging
+        notify(__model__,"Graphs Completed...")
     end
 
     @onchange fileuploads begin
@@ -271,6 +272,7 @@ end
             fileuploads = Dict{AbstractString,AbstractString}()
             forecast = CSV.read(joinpath(FILE_PATH,filename),DataFrame) #reading of files here
             num_products_p,time_horizon_T,product_names,demand_D,workdays_n,productivity_K,date_list = read_forecast(forecast)
+            selected_product = product_names[1] #defaults to first product after uploading
         end
         upfiles = readdir(FILE_PATH)
     end
