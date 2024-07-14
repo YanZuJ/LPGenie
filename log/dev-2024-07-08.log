@@ -2,3 +2,39 @@
 └ @ GenieAutoReload /Users/axgelx/.julia/packages/GenieAutoReload/ESvsh/src/GenieAutoReload.jl:19
 ┌ Info: 2024-07-08 14:22:56 Autoreloading
 └ @ GenieAutoReload /Users/axgelx/.julia/packages/GenieAutoReload/ESvsh/src/GenieAutoReload.jl:22
+┌ Info: 2024-07-08 14:24:39 Watching ["/Users/axgelx/Documents/GitHub/LPGenie"]
+└ @ GenieAutoReload /Users/axgelx/.julia/packages/GenieAutoReload/ESvsh/src/GenieAutoReload.jl:19
+┌ Warning: 2024-07-08 14:24:40 Handlers already registered
+└ @ Genie.Watch /Users/axgelx/.julia/packages/Genie/ddmhZ/src/Watch.jl:52
+┌ Info: 2024-07-08 14:24:41 
+│ Web Server starting at http://0.0.0.0:9101?CHANNEL__=SBQIBHIBXOEKBWXPDPSTUDAYHZIVQIXB 
+└ @ Genie.Server /Users/axgelx/.julia/packages/Genie/ddmhZ/src/Server.jl:182
+┌ Info: 2024-07-08 14:24:42 Listening on: 0.0.0.0:9101, thread id: 1
+└ @ HTTP.Servers /Users/axgelx/.julia/packages/HTTP/sJD5V/src/Servers.jl:382
+┌ Error: 2024-07-08 14:27:35 Failed to revise /Users/axgelx/.julia/packages/MathOptInterface/aJZbq/src/Bridges/Constraint/bridges/slack.jl
+│   exception = Revise.ReviseEvalException("/Users/axgelx/Documents/GitHub/LPGenie/none:0", ErrorException("invalid redefinition of constant Constraint.ScalarSlackBridge"), Any[(top-level scope at none:0, 1)])
+└ @ Revise /Users/axgelx/.julia/packages/Revise/bAgL0/src/packagedef.jl:722
+┌ Error: 2024-07-08 14:27:36 Failed to revise /Users/axgelx/.julia/packages/MathOptInterface/aJZbq/src/Nonlinear/types.jl
+│   exception = Revise.ReviseEvalException("/Users/axgelx/Documents/GitHub/LPGenie/none:0", ErrorException("invalid redefinition of constant Nonlinear.Evaluator"), Any[(top-level scope at none:0, 1)])
+└ @ Revise /Users/axgelx/.julia/packages/Revise/bAgL0/src/packagedef.jl:722
+┌ Error: 2024-07-08 14:27:36 Failed to revise /Users/axgelx/.julia/packages/MathOptInterface/aJZbq/src/FileFormats/CBF/write.jl
+│   exception = Revise.ReviseEvalException("/Users/axgelx/Documents/GitHub/LPGenie/none:0", ErrorException("invalid redefinition of constant CBF._CBFDataStructure"), Any[(top-level scope at none:0, 1)])
+└ @ Revise /Users/axgelx/.julia/packages/Revise/bAgL0/src/packagedef.jl:722
+┌ Error: 2024-07-08 14:27:36 Failed to revise /Users/axgelx/.julia/packages/MathOptInterface/aJZbq/src/FileFormats/LP/LP.jl
+│   exception = Revise.ReviseEvalException("/Users/axgelx/.julia/packages/MathOptInterface/DDWnF/src/Utilities/struct_of_constraints.jl:290", ErrorException("invalid redefinition of constant LP.ModelVectorConstraints"), Any[(top-level scope at struct_of_constraints.jl:290, 1)])
+└ @ Revise /Users/axgelx/.julia/packages/Revise/bAgL0/src/packagedef.jl:722
+┌ Error: 2024-07-08 14:27:36 Failed to revise /Users/axgelx/.julia/packages/MathOptInterface/aJZbq/src/FileFormats/MPS/MPS.jl
+│   exception = Revise.ReviseEvalException("/Users/axgelx/.julia/packages/MathOptInterface/aJZbq/src/FileFormats/MPS/MPS.jl:154", ErrorException("invalid redefinition of constant MPS.Card"), Any[(top-level scope at MPS.jl:154, 1)])
+└ @ Revise /Users/axgelx/.julia/packages/Revise/bAgL0/src/packagedef.jl:722
+┌ Warning: 2024-07-08 14:27:36 The running code does not match the saved version for the following files:
+│ 
+│   /Users/axgelx/.julia/packages/MathOptInterface/aJZbq/src/Nonlinear/types.jl
+│   /Users/axgelx/.julia/packages/MathOptInterface/aJZbq/src/FileFormats/LP/LP.jl
+│   /Users/axgelx/.julia/packages/MathOptInterface/aJZbq/src/FileFormats/MPS/MPS.jl
+│   /Users/axgelx/.julia/packages/MathOptInterface/aJZbq/src/Bridges/Constraint/bridges/slack.jl
+│   /Users/axgelx/.julia/packages/MathOptInterface/aJZbq/src/FileFormats/CBF/write.jl
+│ 
+│ If the error was due to evaluation order, it can sometimes be resolved by calling `Revise.retry()`.
+│ Use Revise.errors() to report errors again. Only the first error in each file is shown.
+│ Your prompt color may be yellow until the errors are resolved.
+└ @ Revise /Users/axgelx/.julia/packages/Revise/bAgL0/src/packagedef.jl:832
