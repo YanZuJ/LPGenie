@@ -3,14 +3,25 @@ module App
 using GenieFramework
 using JuMP
 using Gurobi
-using CSV, DataFrames
+using CSV, DataFrames, XLSX
 using Random
 Random.seed!(1234) # set seed
+using Stipple
+using StippleUI
+using StippleDownloads
+
+import Stipple.opts
 import Test
 @genietools
 
 const FILE_PATH = joinpath("public","uploads")
 mkpath(FILE_PATH)
+
+function df_to_xlsx(df)
+    io = IOBuffer()
+    XLSX.writetable(io, df)
+    take!(io)
+end
 
 function read_forecast(forecast)
     num_products_p = ncol(forecast) - 1  #to not include the time columnindex
@@ -139,7 +150,20 @@ function optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity
         Backlogging = collect(Iterators.flatten(eachrow(backlogging_B))),
     )
 
-    return objective_value(model), value.(workerlevel_W), value.(hired_H), value.(fired_F), value.(inventory_I), value.(production_P), value.(overtime_O), value.(backlogging_B), worker_df, production_df
+    export_df = DataFrame(
+        Product_Name = repeat(product_names, inner = time_horizon_T),
+        Date = repeat(date_list, outer = num_products_p),
+        Demand = vcat(demand_D...),
+        Worker_Level = collect(Iterators.flatten(eachrow(workerlevel_W))),
+        Workers_Hired = collect(Iterators.flatten(eachrow(hired_H))),
+        Workers_Fired = collect(Iterators.flatten(eachrow(fired_F))),
+        Inventory = collect(Iterators.flatten(eachrow(inventory_I))),
+        Production = collect(Iterators.flatten(eachrow(production_P))),
+        Overtime = collect(Iterators.flatten(eachrow(overtime_O))),
+        Backlogging = collect(Iterators.flatten(eachrow(backlogging_B))),
+    )
+
+    return objective_value(model), value.(workerlevel_W), value.(hired_H), value.(fired_F), value.(inventory_I), value.(production_P), value.(overtime_O), value.(backlogging_B), worker_df, production_df, export_df
 end
 
 # add reactive code to make the UI interactive
@@ -202,6 +226,9 @@ end
     #Initialise data frame from optimisation results, and data plot for selected product plots 
     @in worker_df = DataFrame()
     @in production_df = DataFrame()
+    @in export_df = DataFrame()
+
+    @in download_df = false  
 
     # Initialise button state as false, when pressed = true in the UI
     @in press_optimise = false
@@ -229,6 +256,7 @@ end
         backlogging_B = optimise_result[8]
         worker_df = optimise_result[9]
         production_df = optimise_result[10]
+        export_df = optimise_result[11]
         @info "Optimisation Completed"
         press_optimise = false
         optimisation_ready = true
@@ -250,7 +278,17 @@ end
         production_plot = filter_production_df.Production
         overtime_plot = filter_production_df.Overtime
         backlogging_plot = filter_production_df.Backlogging
-        notify(__model__,"Graphs Completed...")
+        notify(__model__,"Graphs Completed!")
+    end   
+
+    @onchange download_df begin
+        if ! isempty(export_df)
+            @info "File downloaded"
+            notify(__model__,"Downloading File...")
+            download_binary(__model__, df_to_xlsx(export_df), "Results.xlsx")
+        else 
+            notify(__model__,"No results detected! Please click Optimise first and refresh the app!")
+        end
     end
 
     @onchange fileuploads begin

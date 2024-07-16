@@ -5,13 +5,13 @@
             <h1 id="ibyx">Worker &amp; Inventory Management App</h1>
             <div class="row">
                 <div id="ipixn" class="st-col col-12 col-sm st-module">
-                    <h6 id="ieh4k">/Instructions:<br>​​​​​​​<br>1. Input Data Forecast in .csv format.<br>2. Customise Options &amp; Costs to your preference<br>​​​​​​​3. <strong>Press</strong> "Optimise" to start program.&nbsp;<br>4. For graphs, <strong>click</strong> each line in legend once to filter it out, or <strong>double-click</strong> to show line by itself.<br>4. Export graph image its topright or .csv data from the right of the webapp.</h6>
+                    <h6 id="ieh4k">Instructions:<br><br>1. Input Data Forecast in .csv format.<br>2. Customise Options &amp; Costs to your preference<br>​​​​​​​3. <strong>Press</strong> "Optimise" to start program.&nbsp;<br>4. For graphs, <em><strong>click</strong></em> each line in legend once to filter it out, or <em><strong>double-click</strong></em> to show line by itself.<br>4. Export graph image its topright or .csv data from the right of the webapp.</h6>
                 </div>
                 <div class="st-col col-12 col-sm st-module">
                     <h6>Options</h6>
                     <div class="row">
                         <div class="st-col col-12 col-sm st-module">
-                            <q-select id="ingb9" :filled="true" label="Select Product" :options="product_names" v-model="selected_product"></q-select>
+                            <q-select id="ingb9" :filled="true" label="Select Product" :options="product_names" v-model="selected_product" color="dark"></q-select>
                         </div>
                         <div class="st-col col-12 col-sm st-module">
                             <q-toggle id="irfid" color="negative" label="Disable Backlogging" v-model="disable_backlogging" icon="cancel"></q-toggle>
@@ -38,8 +38,14 @@
                         </div>
                     </div>
                 </div>
-                <div id="icaba" class="st-col col-12 col-sm st-module">
-                    <q-uploader id="ixnz" accept=".csv" :auto-upload="true" :hide-upload-btn="true" label="Upload Data Forecast" :max-files="3" :multiple="false" :no-thumbnails="true" :url="'/____/upload/' + channel_"></q-uploader>
+                <div class="st-col col-12 col-sm st-module">
+                    <h6>Files</h6>
+                    <div class="row">
+                        <q-uploader id="ixnz" accept=".csv" :auto-upload="true" :hide-upload-btn="true" label="Upload Data Forecast here" :max-files="3" :multiple="true" :no-thumbnails="true" :url="'/____/upload/' + channel_"></q-uploader>
+                    </div>
+                    <div id="izf9qi" class="row">
+                        <q-btn id="i17zd8" color="primary" icon="file_download" label="Download Results.xlsx" v-on:click="download_df = true"></q-btn>
+                    </div>
                 </div>
             </div>
             <div class="st-col col-12 col-sm st-module">
@@ -55,16 +61,12 @@
                         <div class="st-col col-12 col-sm st-module">
                             <st-big-number id="ikbnn" icon="group_off" color="negative" :number="cost_firing_cF" title="Firing"></st-big-number>
                             <q-slider id="ih06g" color="primary" :label="true" :max="5000" :min="1" :step="10" v-model="cost_firing_cF"></q-slider>
-                            <div class="row">
-                                <div class="st-col col-12 col-sm st-module">
-                                    <q-input id="iablh" type="number" v-model="cost_firing_cF" :filled="true" :clearable="true" :dense="true" label="Input Firing cost"></q-input>
-                                </div>
-                            </div>
+                            <q-input id="i3xpat" type="number" v-model="cost_firing_cF" :filled="true" :clearable="true" :dense="true" label="Input Firing cost"></q-input>
                         </div>
                     </div>
                     <div class="st-col col-12 col-sm st-module">
                         <div class="st-col col-12 col-sm st-module">
-                            <st-big-number id="iy3yz" icon="group" color="info" :number="cost_labour_cR" title="Labour"></st-big-number>
+                            <st-big-number id="iy3yz" icon="group" color="secondary" :number="cost_labour_cR" title="Labour"></st-big-number>
                             <q-slider id="iznv2" color="primary" :label="true" :max="500" :min="1" :step="10" v-model="cost_labour_cR"></q-slider>
                             <q-input id="i1zfb" type="number" v-model="cost_labour_cR" :filled="true" :clearable="true" :dense="true" label="Input Labour cost"></q-input>
                         </div>
@@ -78,7 +80,7 @@
                     </div>
                     <div class="st-col col-12 col-sm st-module">
                         <div class="st-col col-12 col-sm st-module">
-                            <st-big-number id="iw24e" icon="warehouse" color="dark" :number="cost_inventory_cI" title="Inventory" :v-for="end_date"></st-big-number>
+                            <st-big-number id="iw24e" icon="warehouse" :number="cost_inventory_cI" title="Inventory" :v-for="end_date" color="primary"></st-big-number>
                             <q-slider id="irqzy" color="primary" :label="true" :max="1000" :min="1" :step="10" v-model="cost_inventory_cI"></q-slider>
                             <q-input id="iepm1" type="number" v-model="cost_inventory_cI" :filled="true" :clearable="true" :dense="true" label="Input Inventory cost"></q-input>
                         </div>
@@ -93,21 +95,21 @@
                     <div class="st-col col-12 col-sm st-module">
                         <st-big-number id="izhly" title="Total Costs" :number="cost"></st-big-number>
                         <div class="row justify-center">
-                            <q-btn id="i1a9i" color="blue" text-color="white" icon="timeline" label="Optimise" v-on:click="press_optimise = true" :disable="press_optimise"></q-btn>
+                            <q-btn id="i1a9i" color="primary" text-color="white" icon="timeline" label="Optimise" v-on:click="press_optimise = true" :disable="press_optimise"></q-btn>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="st-col col-12 col-sm st-module">
-                    <plotly id="iuoms" data="W3siZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe2RlbWFuZF9wbG90fSIsIm1vZGUiOiJsaW5lcyttYXJrZXJzIiwibmFtZSI6IkRlbWFuZCJ9LHsiZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe2ludmVudG9yeV9wbG90fSIsIm1vZGUiOiJsaW5lcyttYXJrZXJzIiwibmFtZSI6IkludmVudG9yeSJ9LHsiZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe3Byb2R1Y3Rpb25fcGxvdH0iLCJuYW1lIjoiUHJvZHVjdGlvbiIsIm1vZGUiOiJsaW5lcyttYXJrZXJzIn0seyJ4IjoiJF97ZGF0ZV9saXN0fSIsInkiOiIkX3tvdmVydGltZV9wbG90fSIsIm5hbWUiOiJPdmVydGltZSIsIm1vZGUiOiJsaW5lcyttYXJrZXJzIn0seyJ4IjoiJF97ZGF0ZV9saXN0fSIsInkiOiIkX3tiYWNrbG9nZ2luZ19wbG90fSIsIm5hbWUiOiJCYWNrbG9nZ2luZyIsIm1vZGUiOiJsaW5lcyttYXJrZXJzIn1d" config="e30=" layout="eyJ0aXRsZSI6IiRfe3NlbGVjdGVkX3Byb2R1Y3R9IiwieWF4aXMiOnsidGl0bGUiOnsidGV4dCI6IlF1YW50aXR5In19LCJ4YXhpcyI6eyJ0aXRsZSI6eyJ0ZXh0IjoiRGF0ZSJ9fX0="></plotly>
+                    <plotly id="iuoms" data="W3siZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe2RlbWFuZF9wbG90fSIsIm1vZGUiOiJsaW5lcyttYXJrZXJzIiwibmFtZSI6IkRlbWFuZCJ9LHsiZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe2ludmVudG9yeV9wbG90fSIsIm1vZGUiOiJsaW5lcyttYXJrZXJzIiwibmFtZSI6IkludmVudG9yeSJ9LHsiZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe3Byb2R1Y3Rpb25fcGxvdH0iLCJuYW1lIjoiUHJvZHVjdGlvbiIsIm1vZGUiOiJsaW5lcyttYXJrZXJzIn0seyJ4IjoiJF97ZGF0ZV9saXN0fSIsInkiOiIkX3tvdmVydGltZV9wbG90fSIsIm5hbWUiOiJPdmVydGltZSIsIm1vZGUiOiJsaW5lcyttYXJrZXJzIn0seyJ4IjoiJF97ZGF0ZV9saXN0fSIsInkiOiIkX3tiYWNrbG9nZ2luZ19wbG90fSIsIm5hbWUiOiJCYWNrbG9nZ2luZyIsIm1vZGUiOiJsaW5lcyttYXJrZXJzIn1d" config="e30=" layout="eyJ0aXRsZSI6IiRfe3NlbGVjdGVkX3Byb2R1Y3R9IiwieWF4aXMiOnsidGl0bGUiOnsidGV4dCI6IlF1YW50aXR5IiwiZm9udCI6eyJjb2xvciI6IiNmZmZmZmYifX19LCJ4YXhpcyI6eyJ0aXRsZSI6eyJ0ZXh0IjoiRGF0ZSIsImZvbnQiOnsiY29sb3IiOiIjZmZmZmZmIn19fSwicGxvdF9iZ2NvbG9yIjoiIzEwMTgyNyIsInBhcGVyX2JnY29sb3IiOiIjMTAxODI3IiwiZm9udCI6eyJjb2xvciI6IiNmZmZmZmYifX0="></plotly>
                 </div>
                 <div class="row">
                     <div class="st-col col-3 col-sm st-module"></div>
                     <div class="st-col col-9 st-module"></div>
                 </div>
                 <div class="st-col col-12 col-sm st-module">
-                    <plotly id="ivxw9" data="W3siZ2J0eXBlIjoiQmFyIENoYXJ0IiwieCI6IiRfe2RhdGVfbGlzdH0iLCJ5IjoiJF97aGlyZWRfcGxvdH0iLCJ0eXBlIjoiYmFyIiwibmFtZSI6IkhpcmVkIFdvcmtlcnMiLCJtYXJrZXIiOnsiY29sb3IiOiIjMDBkMTM0In19LHsiZ2J0eXBlIjoiQmFyIENoYXJ0IiwieCI6IiRfe2RhdGVfbGlzdH0iLCJ5IjoiJF97ZmlyZWRfcGxvdH0iLCJ0eXBlIjoiYmFyIiwibmFtZSI6IkZpcmVkIFdvcmtlcnMiLCJtYXJrZXIiOnsiY29sb3IiOiIjYmQwMDAwIn19LHsiZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe3dvcmtlcmxldmVsX3Bsb3R9IiwidHlwZSI6InNjYXR0ZXIiLCJtb2RlIjoiZ2F1Z2UrbnVtYmVyIiwibmFtZSI6IldvcmtlciBMZXZlbCIsImxpbmUiOnsiY29sb3IiOiIjMDA1NmUwIn19XQ==" config="e30=" layout="eyJ0aXRsZSI6IldvcmtlcnMiLCJ4YXhpcyI6eyJ0aXRsZSI6eyJ0ZXh0IjoiRGF0ZSJ9fSwieWF4aXMiOnsidGl0bGUiOnsidGV4dCI6IldvcmtlcnMifX19"></plotly>
+                    <plotly id="ivxw9" data="W3siZ2J0eXBlIjoiQmFyIENoYXJ0IiwieCI6IiRfe2RhdGVfbGlzdH0iLCJ5IjoiJF97aGlyZWRfcGxvdH0iLCJ0eXBlIjoiYmFyIiwibmFtZSI6IkhpcmVkIFdvcmtlcnMiLCJtYXJrZXIiOnsiY29sb3IiOiIjMDBkMTM0In19LHsiZ2J0eXBlIjoiQmFyIENoYXJ0IiwieCI6IiRfe2RhdGVfbGlzdH0iLCJ5IjoiJF97ZmlyZWRfcGxvdH0iLCJ0eXBlIjoiYmFyIiwibmFtZSI6IkZpcmVkIFdvcmtlcnMiLCJtYXJrZXIiOnsiY29sb3IiOiIjYmQwMDAwIn19LHsiZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe3dvcmtlcmxldmVsX3Bsb3R9IiwidHlwZSI6InNjYXR0ZXIiLCJtb2RlIjoiZ2F1Z2UrbnVtYmVyIiwibmFtZSI6IldvcmtlciBMZXZlbCIsImxpbmUiOnsiY29sb3IiOiIjMDA1NmUwIn19XQ==" config="e30=" layout="eyJ0aXRsZSI6IldvcmtlcnMiLCJ4YXhpcyI6eyJ0aXRsZSI6eyJ0ZXh0IjoiRGF0ZSIsImZvbnQiOnsiY29sb3IiOiIjZmZmZmZmIn19fSwieWF4aXMiOnsidGl0bGUiOnsidGV4dCI6IldvcmtlcnMiLCJmb250Ijp7ImNvbG9yIjoiI2ZmZmZmZiJ9fX0sInBhcGVyX2JnY29sb3IiOiIjMTAxODI3IiwiZm9udCI6eyJjb2xvciI6IiNmZmZmZmYifSwicGxvdF9iZ2NvbG9yIjoiIzEwMTgyNyJ9"></plotly>
                 </div>
             </div>
         </div>
