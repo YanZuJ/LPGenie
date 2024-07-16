@@ -1,5 +1,5 @@
   :root.stipple-core{
-    --q-color-primary: #00156b;
+    --q-color-primary: #6876b1;
     --q-color-secondary: #8ea8c3;
     --q-color-accent: #bea7e5;
     --q-color-dark: #022a50;
@@ -21,7 +21,7 @@
   }
   :root.stipple-core{
     --st-text-1: #302f2f;
-    --st-text-2: #575454;
+    --st-text-2: #ffffff;
     --st-text-3: #5a6460;
   }
   :root.stipple-core{
@@ -32,7 +32,7 @@
     --st-slider--track: #cad2d2;
   }
   p, h1, h2, h3, h4, h5, h6, span, a, li, body{
-    color: #3b3b3b;
+    color: #000000;
     font-family: Helvetica;
   }
   :root.stipple-core h1{
