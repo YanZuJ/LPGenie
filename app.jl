@@ -251,7 +251,6 @@ end
         workerlevel_plot = filter_worker_df.Worker_Level
         hired_plot = filter_worker_df.Workers_Hired
         fired_plot = filter_worker_df.Workers_Fired
-        print(hired_plot)
 
         production_df_copy = copy(production_df)
         filter_production_df = filter!(row -> row.Product_Name == selected_product &&  start_date <= row.Date <= end_date, production_df_copy)
