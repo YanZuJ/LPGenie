@@ -5,7 +5,7 @@
             <h1 id="ibyx">Worker &amp; Inventory Management App</h1>
             <div class="row">
                 <div id="ipixn" class="st-col col-12 col-sm st-module">
-                    <h6 id="ieh4k">Instructions:<br><br>1. Input Data Forecast in .csv format.<br>2. Customise Options &amp; Costs to your preference<br>​​​​​​​3. <strong>Press</strong> "Optimise" to start program.&nbsp;<br>4. For graphs, <em><strong>click</strong></em> each line in legend once to filter it out, or <em><strong>double-click</strong></em> to show line by itself.<br>4. Export graph image its topright or .csv data from the right of the webapp.</h6>
+                    <h6 id="ieh4k">READ INSTRUCTIONS FIRST<br><br>1. <strong id="iemes">IMPORT</strong> Data Forecast in .csv format.<br>2. <strong id="iemes-2">CUSTOMISE</strong> Options &amp; Costs to your preference<br>​​​​​​​3. <strong id="iemes-2-2">CLICK</strong> "Optimise" to start program.&nbsp;<br>4. For graphs, <em><strong id="iemes-3">CLICK</strong></em> each line in legend once to filter it out, or <em><strong id="iemes-4">DOUBLE-CLICK</strong></em> to show line by itself.<br>4.<strong id="iemes-5"> EXPORT</strong> graph image from its topright plots or .csv data from the right of the webapp.</h6>
                 </div>
                 <div class="st-col col-12 col-sm st-module">
                     <h6>Options</h6>
@@ -40,8 +40,8 @@
                 </div>
                 <div class="st-col col-12 col-sm st-module">
                     <h6>Files</h6>
-                    <div class="row">
-                        <q-uploader id="ixnz" accept=".csv" :auto-upload="true" :hide-upload-btn="true" label="Upload Data Forecast here" :max-files="3" :multiple="true" :no-thumbnails="true" :url="'/____/upload/' + channel_"></q-uploader>
+                    <div id="i6bec" class="row">
+                        <q-uploader id="ixnz" accept=".csv" text-color="black" :auto-upload="true" :hide-upload-btn="true" label="Upload Data Forecast here" :max-files="3" :multiple="true" :no-thumbnails="true" :url="'/____/upload/' + channel_"></q-uploader>
                     </div>
                     <div id="izf9qi" class="row">
                         <q-btn id="i17zd8" color="primary" icon="file_download" label="Download Results.xlsx" v-on:click="download_df = true"></q-btn>

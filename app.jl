@@ -2,7 +2,7 @@ module App
 # set up Genie development environment
 using GenieFramework
 using JuMP
-using Gurobi
+using HiGHS
 using CSV, DataFrames, XLSX
 using Random
 Random.seed!(1234) # set seed
@@ -62,7 +62,7 @@ end
 
 function optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity_K,cost_hiring_cH,cost_firing_cF,cost_inventory_cI,cost_labour_cR,cost_overtime_cO,cost_backlogging_cB,product_names,date_list) #num_machines_M,timetaken_τ
     # Initialize the model
-    model = Model(Gurobi.Optimizer)
+    model = Model(HiGHS.Optimizer)
 
     # Variables
     @variable(model, workerlevel_W[1:num_products_p,1:time_horizon_T] >= 0, Int)       # Workers
