@@ -49,7 +49,7 @@ function read_forecast(forecast)
     return num_products_p,time_horizon_T,product_names,demand_D,workdays_n,productivity_K,date_list
 end
 
-function optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity_K,cost_hiring_cH,cost_firing_cF,cost_inventory_cI,cost_labour_cR,cost_overtime_cO,cost_backlogging_cB,product_names,date_list) #num_machines_M,timetaken_τ
+function optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity_K,cost_hiring_cH,cost_firing_cF,cost_inventory_cI,cost_labour_cR,cost_overtime_cO,cost_backlogging_cB,cost_idle_cU,cost_subcontract_cS,product_names,date_list) #num_machines_M,timetaken_τ
     # Initialize the model
     model = Model(Gurobi.Optimizer)
 
@@ -61,18 +61,20 @@ function optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity
     @variable(model, production_P[1:num_products_p,1:time_horizon_T] >= 0, Int)       # Production
     @variable(model, overtime_O[1:num_products_p,1:time_horizon_T] >= 0, Int)       # Overtime
     @variable(model, backlogging_B[1:num_products_p,1:time_horizon_T] >= 0, Int)        # Production
+    @variable(model, idle_U[1:num_products_p,1:time_horizon_T] >= 0)         #Idle
+    @variable(model, subcontract_S[1:num_products_p,1:time_horizon_T] >= 0)         #Subcontract
 
     # Objective function: Minimize total cost
     @objective(model, Min, sum(cost_hiring_cH*hired_H + cost_firing_cF*fired_F 
     + cost_inventory_cI*inventory_I + cost_labour_cR*production_P 
-    + cost_overtime_cO*overtime_O + cost_backlogging_cB*backlogging_B))
+    + cost_overtime_cO*overtime_O + cost_idle_cU*idle_U+ cost_subcontract_cS*subcontract_S + cost_backlogging_cB*backlogging_B))
 
     # Constraints
 
     #only for period 1, W annd I-B eqns
     for p in 1:num_products_p
         @constraint(model, workerlevel_W[p,1] == hired_H[p,1] - fired_F[p,1])
-        @constraint(model, inventory_I[p,1] - backlogging_B[p,1] == production_P[p,1] - demand_D[p][1])
+        @constraint(model, inventory_I[p,1] - backlogging_B[p,1] == production_P[p,1] + subcontract_S[p,1]- demand_D[p][1])
     end    
 
     #for rest of period, W and I-B equations
@@ -82,7 +84,7 @@ function optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity
             == workerlevel_W[p,t-1] + hired_H[p,t] - fired_F[p,t])
             @constraint(model, inventory_I[p,t] - backlogging_B[p,t] 
             == inventory_I[p,t-1] - backlogging_B[p,t-1] 
-            + production_P[p,t] - demand_D[p][t])
+            + subcontract_S[p,t]+ production_P[p,t] - demand_D[p][t])
         end
     end
 
@@ -90,7 +92,7 @@ function optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity
     for p in 1:num_products_p
         for t in 1:time_horizon_T
             @constraint(model, production_P[p,t] 
-            == productivity_K[p] * workdays_n[t] * workerlevel_W[p,t] + overtime_O[p,t])
+            == productivity_K[p] * workdays_n[t] * workerlevel_W[p,t] + overtime_O[p,t] - idle_U[p,t])
             # for m in 1:num_machines_M
             #     total_time_taken += timetaken_τ[p][m] * production_P[p, t]
             # end
@@ -110,6 +112,8 @@ function optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity
     println("Production: ", round.(Int,value.(production_P)))
     println("Overtime: ", round.(Int,value.(overtime_O)))
     println("Backlogging: ", round.(Int,value.(backlogging_B)))
+    println("Subcontract: ", round.(Int,value.(subcontract_S)))
+    println("Idle: ", round.(Int,value.(idle_U)))
 
     #Update to rounded integer values 
     workerlevel_W = round.(Int,value.(workerlevel_W))
@@ -119,6 +123,9 @@ function optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity
     production_P = round.(Int,value.(production_P))
     overtime_O = round.(Int,value.(overtime_O))
     backlogging_B = round.(Int,value.(backlogging_B))
+    idle_U = round.(Int,value.(idle_U))
+    subcontract_S = round.(Int,value.(subcontract_S))
+    
 
     #retrieve values in a DataFrames for plotting of graphs
     worker_df = DataFrame(
@@ -127,6 +134,8 @@ function optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity
         Worker_Level = collect(Iterators.flatten(eachrow(workerlevel_W))),
         Workers_Hired = collect(Iterators.flatten(eachrow(hired_H))),
         Workers_Fired = collect(Iterators.flatten(eachrow(fired_F))),
+        Workers_Idle = collect(Iterators.flatten(eachrow(idle_U))),
+        Workers_Subcontract = collect(Iterators.flatten(eachrow(subcontract_S))),
     )
 
     production_df = DataFrame(
@@ -139,7 +148,7 @@ function optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity
         Backlogging = collect(Iterators.flatten(eachrow(backlogging_B))),
     )
 
-    return objective_value(model), value.(workerlevel_W), value.(hired_H), value.(fired_F), value.(inventory_I), value.(production_P), value.(overtime_O), value.(backlogging_B), worker_df, production_df
+    return objective_value(model), value.(workerlevel_W), value.(hired_H), value.(fired_F), value.(inventory_I), value.(production_P), value.(overtime_O), value.(backlogging_B), value.(idle_U), value.(subcontract_S), worker_df, production_df
 end
 
 # add reactive code to make the UI interactive
@@ -159,7 +168,8 @@ end
     @in cost_labour_cR = 233  # Cost of Labour per production unit
     @in cost_overtime_cO = 349 # Cost of Overtime per overtime unit
     @in cost_backlogging_cB = 135  #Cost of Backlogging per overtime unit 
-
+    @in cost_idle_cU= 20 #Cost of Idle per worker
+    @in cost_subcontract_cS=250 #cost of Subcontract 
     # watch a variable and execute a block of code when
     # its value changes
 
@@ -177,15 +187,6 @@ end
 
     # Initialise optimise function variables, see Backend.ipynb for more info
     @in cost = 0
-<<<<<<< HEAD
-    @in worklevel_W = Matrix{Float64}(undef)
-    @in hired_H = Matrix{Float64}(undef)
-    @in fired_F = Matrix{Float64}(undef)
-    @in inventory_I = Matrix{Float64}(undef)
-    @in prodcution_P = Matrix{Float64}(undef)
-    @in overtime_O = Matrix{Float64}(undef)
-    @in backlogging_B = Matrix{Float64}(undef)
-=======
     @in worklevel_W = Matrix{Float64}(undef,4,12)
     @in hired_H = Matrix{Float64}(undef,4,12)
     @in fired_F = Matrix{Float64}(undef,4,12)
@@ -193,7 +194,9 @@ end
     @in prodcution_P = Matrix{Float64}(undef,4,12)
     @in overtime_O = Matrix{Float64}(undef,4,12)
     @in backlogging_B = Matrix{Float64}(undef,4,12)
->>>>>>> joedevelop
+    @in idle_U = Matrix{Float64}(undef,4,12)
+    @in subcontract_S = Matrix{Float64}(undef,4,12)
+
 
     # Initialise start and end date to for dropdown
     @in start_date = "2023-12-30"
@@ -202,6 +205,8 @@ end
     @in workerlevel_plot = []
     @in hired_plot = []
     @in fired_plot = []
+    @in idle_plot = []
+    @in subcontract_plot = []
 
     @in demand_plot = []
     @in inventory_plot = []
@@ -226,8 +231,8 @@ end
     @onbutton press_optimise begin
         @info "Running Optimisation..."
         notify(__model__,"Running Optimisation...") 
-        optimise_result = optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity_K,cost_hiring_cH,cost_firing_cF,cost_inventory_cI,cost_labour_cR,cost_overtime_cO,cost_backlogging_cB, product_names, date_list) #num_machines_M,timetaken_τ
-        elapsed_time = @elapsed optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity_K,cost_hiring_cH,cost_firing_cF,cost_inventory_cI,cost_labour_cR,cost_overtime_cO,cost_backlogging_cB, product_names, date_list) #num_machines_M,timetaken_τ
+        optimise_result = optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity_K,cost_hiring_cH,cost_firing_cF,cost_inventory_cI,cost_labour_cR,cost_overtime_cO,cost_backlogging_cB,cost_idle_cU,cost_subcontract_cS, product_names, date_list) #num_machines_M,timetaken_τ
+        elapsed_time = @elapsed optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity_K,cost_hiring_cH,cost_firing_cF,cost_inventory_cI,cost_labour_cR,cost_overtime_cO,cost_backlogging_cB,cost_idle_cU,cost_subcontract_cS, product_names, date_list) #num_machines_M,timetaken_τ
         notify(__model__,"Optimisation Completed. Time taken: $(elapsed_time) seconds")   
         cost = round(Int,optimise_result[1])
         worklevel_W = optimise_result[2]
@@ -237,8 +242,11 @@ end
         prodcution_P = optimise_result[6]
         overtime_O = optimise_result[7]
         backlogging_B = optimise_result[8]
-        worker_df = optimise_result[9]
-        production_df = optimise_result[10]
+        idle_U = optimise_result[9]
+        subcontract_S = optimise_result[10]
+        worker_df = optimise_result[11]
+        production_df = optimise_result[12]
+       
         @info "Optimisation Completed"
         press_optimise = false
         optimisation_ready = true
@@ -251,7 +259,8 @@ end
         workerlevel_plot = filter_worker_df.Worker_Level
         hired_plot = filter_worker_df.Workers_Hired
         fired_plot = filter_worker_df.Workers_Fired
-        print(hired_plot)
+        idle_plot = filter_worker_df.Workers_Idle
+        subcontract_plot = filter_worker_df.Workers_Subcontract
 
         production_df_copy = copy(production_df)
         filter_production_df = filter!(row -> row.Product_Name == selected_product &&  start_date <= row.Date <= end_date, production_df_copy)
