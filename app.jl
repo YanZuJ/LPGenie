@@ -242,10 +242,11 @@ end
         prodcution_P = optimise_result[6]
         overtime_O = optimise_result[7]
         backlogging_B = optimise_result[8]
-        worker_df = optimise_result[9]
-        production_df = optimise_result[10]
-        idle_U = optimise_result[11]
-        subcontract_S = optimise_result[12]
+        idle_U = optimise_result[9]
+        subcontract_S = optimise_result[10]
+        worker_df = optimise_result[11]
+        production_df = optimise_result[12]
+       
         @info "Optimisation Completed"
         press_optimise = false
         optimisation_ready = true
