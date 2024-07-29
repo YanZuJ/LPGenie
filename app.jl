@@ -83,7 +83,7 @@ function optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity
     @variable(model, production_P[1:num_products_p,1:time_horizon_T] >= 0, Int)       # Production
     @variable(model, overtime_O[1:num_products_p,1:time_horizon_T] >= 0, Int)       # Overtime
     @variable(model, backlogging_B[1:num_products_p,1:time_horizon_T] >= 0, Int)  # Backlogging
-    @variable(model, idle_U[1:num_products_p,1:time_horizon_T] >= 0. Int)         #Idle
+    @variable(model, idle_U[1:num_products_p,1:time_horizon_T] >= 0, Int)         #Idle
     @variable(model, subcontract_S[1:num_products_p,1:time_horizon_T] >= 0, Int)         #Subcontract      
 
     # Objective function: Minimize total cost
