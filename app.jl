@@ -2,10 +2,7 @@ module App
 # set up Genie development environment
 using GenieFramework
 using JuMP
-<<<<<<< HEAD
-=======
 using Gurobi
->>>>>>> main
 using HiGHS
 using CSV, DataFrames, XLSX
 using Random
@@ -22,8 +19,6 @@ import Test
 const FILE_PATH = joinpath("public","uploads")
 mkpath(FILE_PATH)
 
-<<<<<<< HEAD
-=======
 # for gurobi license file 
 const ENV["GRB_LICENSE_FILE"] = joinpath("gurobi.lic")
 
@@ -34,7 +29,6 @@ function commas(num::Integer)
 end
 
 # for download 
->>>>>>> main
 function df_to_xlsx(df)
     io = IOBuffer()
     XLSX.writetable(io, df)
@@ -187,17 +181,11 @@ function optimise(num_products_p,time_horizon_T,demand_D,workdays_n,productivity
         Production = collect(Iterators.flatten(eachrow(production_P))),
         Overtime = collect(Iterators.flatten(eachrow(overtime_O))),
         Backlogging = collect(Iterators.flatten(eachrow(backlogging_B))),
-<<<<<<< HEAD
-    )
-
-    return objective_value(model), value.(workerlevel_W), value.(hired_H), value.(fired_F), value.(inventory_I), value.(production_P), value.(overtime_O), value.(backlogging_B), worker_df, production_df, export_df
-=======
         Idle = collect(Iterators.flatten(eachrow(idle_U))),
         Subcontract = collect(Iterators.flatten(eachrow(subcontract_S))),
     )
 
     return objective_value(model), value.(workerlevel_W), value.(hired_H), value.(fired_F), value.(inventory_I), value.(production_P), value.(overtime_O), value.(backlogging_B), value.(idle_U), value.(subcontract_S), worker_df, production_df, export_df
->>>>>>> main
 end
 
 # add reactive code to make the UI interactive
@@ -274,10 +262,7 @@ end
     @in production_df = DataFrame()
     @in export_df = DataFrame()
 
-<<<<<<< HEAD
-=======
     # Initialise download button as false, once button is pressed, download_df becomes true.
->>>>>>> main
     @in download_df = false  
 
     # Initialise button state as false, when pressed = true in the UI
@@ -310,18 +295,12 @@ end
         prodcution_P = optimise_result[6]
         overtime_O = optimise_result[7]
         backlogging_B = optimise_result[8]
-<<<<<<< HEAD
-        worker_df = optimise_result[9]
-        production_df = optimise_result[10]
-        export_df = optimise_result[11]
-=======
         idle_U = optimise_result[9]
         subcontract_S = optimise_result[10]
         worker_df = optimise_result[11]
         production_df = optimise_result[12]
         export_df = optimise_result[13]
 
->>>>>>> main
         @info "Optimisation Completed"
         press_optimise = false
         optimisation_ready = true
@@ -343,29 +322,18 @@ end
         production_plot = filter_production_df.Production
         overtime_plot = filter_production_df.Overtime
         backlogging_plot = filter_production_df.Backlogging
-<<<<<<< HEAD
-        notify(__model__,"Graphs Completed!")
-    end   
-
-    @onchange download_df begin
-=======
         idle_plot = filter_production_df.Idle
         subcontract_plot = filter_production_df.Subcontract
         notify(__model__,"Graphs Completed!")
     end   
 
     @onbutton download_df begin
->>>>>>> main
         if ! isempty(export_df)
             @info "File downloaded"
             notify(__model__,"Downloading File...")
             download_binary(__model__, df_to_xlsx(export_df), "Results.xlsx")
         else 
-<<<<<<< HEAD
-            notify(__model__,"No results detected! Please click Optimise first and refresh the app!")
-=======
             notify(__model__,"No results detected! Please click Optimise first!")
->>>>>>> main
         end
     end
 
