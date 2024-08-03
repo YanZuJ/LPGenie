@@ -147,3 +147,6 @@ svg .draglayer {
   font-size: 0.8em;
 }
 
+.container{
+    max-width: 100%;
+}
