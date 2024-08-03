@@ -21,7 +21,7 @@ Please ensure you have julia installed. Julia can be installed here: https://jul
 On Julia, run the code below and install the dependencies.
 
 ```bash
-using Pkg
+julia> using Pkg
 
 # List of packages to install
 julia> packages = [
