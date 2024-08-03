@@ -1,5 +1,6 @@
 [deps]
 GenieFramework = "a59fdf5c-6bf0-4f5d-949c-a137c9e2f353"
+Gurobi = "2e9cd046-0924-5485-92f1-d5272153d98b"
 
 [Genie]
 instantiated_pwd = "c:\\Users\\Joe\\OneDrive\\Documents\\GitHub\\LPGenie"

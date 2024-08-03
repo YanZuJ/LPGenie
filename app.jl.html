@@ -5,48 +5,55 @@
             <h1 id="ibyx">Worker &amp; Inventory Management</h1>
             <div class="row">
                 <div id="ipixn" class="st-col col-12 col-sm st-module">
-                    <h6 id="ieh4k"><strong id="ilbfb">READ INSTRUCTIONS FIRST</strong><br><br>1. <strong id="iemes">IMPORT</strong> Data Forecast in .csv format.<br>2. <strong id="iemes-2">CUSTOMISE</strong> Options &amp; Costs to your preference<br>​​​​​​​3. <strong id="iemes-2-2">CLICK OPTIMISE</strong> to start program.&nbsp;<br>4. For graphs, <em><strong id="iemes-3">CLICK</strong></em> each line in legend once to filter it out, or <em><strong id="iemes-4">DOUBLE-CLICK</strong></em> to show line by itself.<br>5.<strong id="iemes-5"> EXPORT</strong> graph image from its topright plots or .csv data from the right of the webapp.</h6>
+                    <h6 id="ieh4k"><strong id="ilbfb">READ INSTRUCTIONS FIRST</strong><br><br>1. <strong id="iemes">DOWNLOAD</strong> File template and follow instructions inside, then <strong id="iwu39j"> UPLOAD</strong> it beside.<br>2. <strong id="iemes-2">CUSTOMISE</strong> Options &amp; Costs to your preference<br>​​​​​​​3. <strong id="iemes-2-2">CLICK OPTIMISE</strong> to start program.&nbsp;<br>4. For graphs, <em><strong id="iemes-3">CLICK</strong></em> each line in legend once to filter it out, or <em><strong id="iemes-4">DOUBLE-CLICK</strong></em> to show line by itself.<br>5.<strong id="iemes-5"> EXPORT</strong> graph image from its topright plots or .csv data from the right of the webapp.</h6>
                 </div>
                 <div id="i2xnk" class="st-col col-sm st-module col-3">
                     <h6 id="im1hu">Files</h6>
-                    <div id="i6bec" class="row">
-                        <q-uploader id="ixnz" accept=".csv" text-color="black" :auto-upload="true" :hide-upload-btn="true" label="Upload Data Forecast here" :max-files="3" :multiple="true" :no-thumbnails="true" :url="'/____/upload/' + channel_"></q-uploader>
+                    <div class="row">
+                        <div class="row justify-center"></div>
+                        <q-btn id="ik7xbv" color="warning" icon="file_download" label="Download File Template" v-on:click="download_template = true"></q-btn>
                     </div>
-                    <q-btn id="i17zd8" color="primary" icon="file_download" label="Download Results.xlsx" v-on:click="download_df = true"></q-btn>
+                    <div id="irl56u" class="row">
+                        <q-uploader accept=".xlsx" text-color="black" :auto-upload="true" :hide-upload-btn="true" label="Upload File Template here" :max-files="3" :multiple="true" :no-thumbnails="true" :url="'/____/upload/' + channel_" id="itk3fm"></q-uploader>
+                    </div>
+                    <q-btn id="i17zd8" color="primary" icon="arrow_outward" label="Export Results.xlsx" v-on:click="download_df = true"></q-btn>
                     <div id="izf9qi" class="row">
                         <div class="row justify-center"></div>
                     </div>
                 </div>
             </div>
             <div class="st-col col-12 col-sm st-module">
-                <h6 id="ieqqv">Options</h6>
+                <h6 id="i0szps">Options</h6>
                 <div class="row">
                     <div class="st-col col-12 col-sm st-module">
-                        <q-select id="ingb9" :filled="true" label="Select Product" :options="product_names" v-model="selected_product" color="primary"></q-select>
+                        <q-select id="iwqc1p" :filled="true" label="Select Product" :options="product_names" v-model="selected_product" color="primary"></q-select>
                     </div>
                     <div class="st-col col-12 col-sm st-module">
-                        <q-input iscomposite="true" id="ixkjf" :clearable="true" :filled="true" label="Starting Date" v-model="start_date">
-                            <q-icon id="inyy7" class="cursor-pointer" name="event">
+                        <q-select id="ipozdk" :filled="true" label="Select Worker" v-model="selected_worker" color="primary" :options="worker_names"></q-select>
+                    </div>
+                    <div class="st-col col-12 col-sm st-module">
+                        <q-input iscomposite="true" id="icu7p1" :clearable="true" :filled="true" label="Starting Date" v-model="start_date">
+                            <q-icon id="i4viwq" class="cursor-pointer" name="event">
                                 <q-popup-proxy>
-                                    <q-date id="ienif" mask="YYYY-MM-DD" :no-unset="true" :today-btn="true" v-model="start_date"></q-date>
+                                    <q-date id="istwxv" mask="YYYY-MM-DD" :no-unset="true" :today-btn="true" v-model="start_date"></q-date>
                                 </q-popup-proxy>
                             </q-icon>
                         </q-input>
                     </div>
                     <div class="st-col col-12 col-sm st-module">
-                        <q-input iscomposite="true" id="iy4g4p" :clearable="true" :filled="true" label="Ending Date" v-model="end_date">
-                            <q-icon id="i1at0x" class="cursor-pointer" name="event">
+                        <q-input iscomposite="true" id="ih9il2" :clearable="true" :filled="true" label="Ending Date" v-model="end_date">
+                            <q-icon id="ib31ug" class="cursor-pointer" name="event">
                                 <q-popup-proxy>
-                                    <q-date id="ih9dmb" mask="YYYY-MM-DD" :no-unset="true" :today-btn="true" v-model="end_date"></q-date>
+                                    <q-date id="ijo02z" mask="YYYY-MM-DD" :no-unset="true" :today-btn="true" v-model="end_date"></q-date>
                                 </q-popup-proxy>
                             </q-icon>
                         </q-input>
                     </div>
                     <div class="st-col col-12 col-sm st-module">
-                        <q-toggle id="izipyv" color="negative" label="Disable Backlogging" v-model="disable_backlogging" icon="cancel"></q-toggle>
+                        <q-toggle id="it1mqn" color="negative" label="Disable Backlogging" v-model="disable_backlogging" icon="cancel"></q-toggle>
                     </div>
                     <div class="st-col col-12 col-sm st-module">
-                        <h6 id="ixlfk">Total Costs: <strong id="i0abc5">{{cost_str}}</strong></h6>
+                        <h6 id="idt8m6">Total Costs: <strong id="i4t9qp">{{cost_str}}</strong></h6>
                     </div>
                 </div>
             </div>
@@ -119,8 +126,8 @@
                 </div>
                 <div id="ittlw9" class="st-col col-12 col-sm st-module">
                     <h6 id="imjggd">Graphs</h6>
-                    <plotly id="iuoms" data="W3siZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe2RlbWFuZF9wbG90fSIsIm1vZGUiOiJsaW5lcyttYXJrZXJzIiwibmFtZSI6IkRlbWFuZCJ9LHsiZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe2ludmVudG9yeV9wbG90fSIsIm1vZGUiOiJsaW5lcyttYXJrZXJzIiwibmFtZSI6IkludmVudG9yeSIsIm1hcmtlciI6eyJjb2xvciI6ImdyZXkifX0seyJnYnR5cGUiOiJMaW5lIENoYXJ0IiwieCI6IiRfe2RhdGVfbGlzdH0iLCJ5IjoiJF97cHJvZHVjdGlvbl9wbG90fSIsIm5hbWUiOiJQcm9kdWN0aW9uIiwibW9kZSI6ImxpbmVzK21hcmtlcnMifSx7IngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe292ZXJ0aW1lX3Bsb3R9IiwibmFtZSI6Ik92ZXJ0aW1lIiwibW9kZSI6ImxpbmVzK21hcmtlcnMiLCJtYXJrZXIiOnsiY29sb3IiOiIjZmY4ODAwIn19LHsieCI6IiRfe2RhdGVfbGlzdH0iLCJ5IjoiJF97YmFja2xvZ2dpbmdfcGxvdH0iLCJuYW1lIjoiQmFja2xvZ2dpbmciLCJtb2RlIjoibGluZXMrbWFya2VycyJ9LHsiZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe2lkbGVfcGxvdH0iLCJ0eXBlIjoic2NhdHRlciIsIm1vZGUiOiJsaW5lcyttYXJrZXJzIiwibmFtZSI6IklkbGUiLCJtYXJrZXIiOnsiY29sb3IiOiIjZmYwMDAwIn19LHsieCI6IiRfe2RhdGVfbGlzdH0iLCJ5IjoiJF97c3ViY29udHJhY3RfcGxvdH0iLCJ0eXBlIjoic2NhdHRlciIsIm5hbWUiOiJTdWJjb250cmFjdCIsIm1hcmtlciI6eyJjb2xvciI6IiNmYmZmMDAifX1d" config="e30=" layout="eyJ0aXRsZSI6IiRfe3NlbGVjdGVkX3Byb2R1Y3R9IiwieWF4aXMiOnsidGl0bGUiOnsidGV4dCI6IlN0b2NrIFF1YW50aXR5IiwiZm9udCI6eyJjb2xvciI6IiNmZmZmZmYifX19LCJ4YXhpcyI6eyJ0aXRsZSI6eyJ0ZXh0IjoiRGF0ZSIsImZvbnQiOnsiY29sb3IiOiIjZmZmZmZmIn19fSwicGxvdF9iZ2NvbG9yIjoiIzEwMTgyNyIsInBhcGVyX2JnY29sb3IiOiIjMTAxODI3IiwiZm9udCI6eyJjb2xvciI6IiNmZmZmZmYifX0="></plotly>
-                    <plotly id="ivxw9" data="W3siZ2J0eXBlIjoiQmFyIENoYXJ0IiwieCI6IiRfe2RhdGVfbGlzdH0iLCJ5IjoiJF97aGlyZWRfcGxvdH0iLCJ0eXBlIjoiYmFyIiwibmFtZSI6IkhpcmVkIFdvcmtlcnMiLCJtYXJrZXIiOnsiY29sb3IiOiIjMDBkMTM0In19LHsiZ2J0eXBlIjoiQmFyIENoYXJ0IiwieCI6IiRfe2RhdGVfbGlzdH0iLCJ5IjoiJF97ZmlyZWRfcGxvdH0iLCJ0eXBlIjoiYmFyIiwibmFtZSI6IkZpcmVkIFdvcmtlcnMiLCJtYXJrZXIiOnsiY29sb3IiOiIjYmQwMDAwIn19LHsiZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe3dvcmtlcmxldmVsX3Bsb3R9IiwidHlwZSI6InNjYXR0ZXIiLCJtb2RlIjoiZ2F1Z2UrbnVtYmVyIiwibmFtZSI6IldvcmtlciBMZXZlbCIsImxpbmUiOnsiY29sb3IiOiIjMDA1NmUwIn19XQ==" config="e30=" layout="eyJ0aXRsZSI6IiRfe3NlbGVjdGVkX3Byb2R1Y3R9IiwieGF4aXMiOnsidGl0bGUiOnsidGV4dCI6IkRhdGUiLCJmb250Ijp7ImNvbG9yIjoiI2ZmZmZmZiJ9fX0sInlheGlzIjp7InRpdGxlIjp7InRleHQiOiJXb3JrZXJzIiwiZm9udCI6eyJjb2xvciI6IiNmZmZmZmYifX19LCJwYXBlcl9iZ2NvbG9yIjoiIzEwMTgyNyIsImZvbnQiOnsiY29sb3IiOiIjZmZmZmZmIn0sInBsb3RfYmdjb2xvciI6IiMxMDE4MjcifQ=="></plotly>
+                    <plotly id="iuoms" data="W3siZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe2RlbWFuZF9wbG90fSIsIm1vZGUiOiJsaW5lcyttYXJrZXJzIiwibmFtZSI6IkRlbWFuZCJ9LHsiZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe2ludmVudG9yeV9wbG90fSIsIm1vZGUiOiJsaW5lcyttYXJrZXJzIiwibmFtZSI6IkludmVudG9yeSIsIm1hcmtlciI6eyJjb2xvciI6ImdyZXkifX0seyJnYnR5cGUiOiJMaW5lIENoYXJ0IiwieCI6IiRfe2RhdGVfbGlzdH0iLCJ5IjoiJF97cHJvZHVjdGlvbl9wbG90fSIsIm5hbWUiOiJQcm9kdWN0aW9uIiwibW9kZSI6ImxpbmVzK21hcmtlcnMifSx7IngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe292ZXJ0aW1lX3Bsb3R9IiwibmFtZSI6Ik92ZXJ0aW1lIiwibW9kZSI6ImxpbmVzK21hcmtlcnMiLCJtYXJrZXIiOnsiY29sb3IiOiIjZmY4ODAwIn19LHsieCI6IiRfe2RhdGVfbGlzdH0iLCJ5IjoiJF97YmFja2xvZ2dpbmdfcGxvdH0iLCJuYW1lIjoiQmFja2xvZ2dpbmciLCJtb2RlIjoibGluZXMrbWFya2VycyJ9LHsiZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe2lkbGVfcGxvdH0iLCJ0eXBlIjoic2NhdHRlciIsIm1vZGUiOiJsaW5lcyttYXJrZXJzIiwibmFtZSI6IklkbGUiLCJtYXJrZXIiOnsiY29sb3IiOiIjZmYwMDAwIn19LHsieCI6IiRfe2RhdGVfbGlzdH0iLCJ5IjoiJF97c3ViY29udHJhY3RfcGxvdH0iLCJ0eXBlIjoic2NhdHRlciIsIm5hbWUiOiJTdWJjb250cmFjdCIsIm1hcmtlciI6eyJjb2xvciI6IiNmYmZmMDAifSwibW9kZSI6ImxpbmVzK21hcmtlcnMifV0=" config="e30=" layout="eyJ0aXRsZSI6IiRfe3NlbGVjdGVkX3Byb2R1Y3R9IiwieWF4aXMiOnsidGl0bGUiOnsidGV4dCI6IlN0b2NrIFF1YW50aXR5IiwiZm9udCI6eyJjb2xvciI6IiNmZmZmZmYifX19LCJ4YXhpcyI6eyJ0aXRsZSI6eyJ0ZXh0IjoiRGF0ZSIsImZvbnQiOnsiY29sb3IiOiIjZmZmZmZmIn19fSwicGxvdF9iZ2NvbG9yIjoiIzEwMTgyNyIsInBhcGVyX2JnY29sb3IiOiIjMTAxODI3IiwiZm9udCI6eyJjb2xvciI6IiNmZmZmZmYifX0="></plotly>
+                    <plotly id="ivxw9" data="W3siZ2J0eXBlIjoiQmFyIENoYXJ0IiwieCI6IiRfe2RhdGVfbGlzdH0iLCJ5IjoiJF97aGlyZWRfcGxvdH0iLCJ0eXBlIjoiYmFyIiwibmFtZSI6IkhpcmVkIFdvcmtlcnMiLCJtYXJrZXIiOnsiY29sb3IiOiIjNGRmZjAwIn19LHsiZ2J0eXBlIjoiQmFyIENoYXJ0IiwieCI6IiRfe2RhdGVfbGlzdH0iLCJ5IjoiJF97ZmlyZWRfcGxvdH0iLCJ0eXBlIjoiYmFyIiwibmFtZSI6IkZpcmVkIFdvcmtlcnMiLCJtYXJrZXIiOnsiY29sb3IiOiIjZmYwMDAwIn19LHsiZ2J0eXBlIjoiTGluZSBDaGFydCIsIngiOiIkX3tkYXRlX2xpc3R9IiwieSI6IiRfe3dvcmtlcmxldmVsX3Bsb3R9IiwidHlwZSI6InNjYXR0ZXIiLCJtb2RlIjoibGluZXMrbWFya2VycyIsIm5hbWUiOiJXb3JrZXIgTGV2ZWwiLCJsaW5lIjp7ImNvbG9yIjoiIzAwNTZlMCJ9fV0=" config="e30=" layout="eyJ0aXRsZSI6IiRfe3NlbGVjdGVkX3dvcmtlcn0iLCJ4YXhpcyI6eyJ0aXRsZSI6eyJ0ZXh0IjoiRGF0ZSIsImZvbnQiOnsiY29sb3IiOiIjZmZmZmZmIn19fSwieWF4aXMiOnsidGl0bGUiOnsidGV4dCI6IldvcmtlcnMiLCJmb250Ijp7ImNvbG9yIjoiI2ZmZmZmZiJ9fX0sInBhcGVyX2JnY29sb3IiOiIjMTAxODI3IiwiZm9udCI6eyJjb2xvciI6IiNmZmZmZmYifSwicGxvdF9iZ2NvbG9yIjoiIzEwMTgyNyJ9"></plotly>
                 </div>
             </div>
         </div>
