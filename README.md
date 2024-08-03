@@ -2,7 +2,7 @@
 Worker and Inventory Management App
 
 ## Project Description
-For any company to profit from a product, there must be a strategic plan in place to produce just enough to meet that need. This plan is known as Aggregate Planning, where our web application utilises Gurobi optimiser to give the best resource allocation while minimising costs in a multi product, multi workcentre environment. 
+For any company to profit from a product, there must be a strategic plan in place to produce just enough to meet that need. This plan is known as Aggregate Planning, where our web application utilises an optimiser to give the best resource allocation while minimising costs in a multi product, multi workcentre environment. 
 
 ## Process
 This web application takes in product demand forecast over a time horizon, a worker-product type matrix with values of the number of products per time period, an initial number of workers and products based on the .xlsx template found in the application. After inputting the necessary info, you can click optimise to view the various optimal resource allocations through the graphs. You can customise the costs and filter the graphs to your liking, before exporting your results over to another Results.xlsx file. The project is also hosted on JuliaHub online for scaling and deployment in Cloud.
@@ -62,17 +62,13 @@ julia> using Pkg; Pkg.instantiate()'
 
 Finally, run the app
 
-```bash
-julia> --project
-```
-
 ```julia
 julia> using GenieFramework
 julia> Genie.loadapp() # load app
 julia> up() # start server
 ```
 
-Finally, open your browser and navigate to `http://localhost:8000/` to use the app. #9999 on Julia Hub
+Open your browser and navigate to `http://localhost:8000/` to use the app. On JuliaHub, it will be 9999 instead.
 
 ## Important Notes
 - This app uses a WLS Academic Gurobi License which expires on September. 2024 Replace gurobi.lic with another valid WLS Academic license gurobi.lic to continue using the application after expiry period.
