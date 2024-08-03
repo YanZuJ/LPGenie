@@ -15,7 +15,7 @@ TOOLS USED:
 
 INSTALLATION:
 
-Clone the repository and install the dependencies.
+Clone the repository to a folder and install the dependencies.
 
 ```bash
 using Pkg
@@ -45,12 +45,17 @@ end
 Pkg.build("Gurobi")
 ```
 
-First `cd` into the project directory then run:
+First `cd` into the project directory in Julia by:
 
 ```bash
-$> julia --project -e 'using Pkg; Pkg.instantiate()'
+$> julia cd("file\path\to\code")
 ```
 
+Then instantiate the project of its dependencies by
+
+```bash
+$> julia using Pkg; Pkg.instantiate()'
+```
 
 Finally, run the app
 
@@ -63,6 +68,7 @@ julia> using GenieFramework
 julia> Genie.loadapp() # load app
 julia> up() # start server
 ```
+
 Finally, open your browser and navigate to `http://localhost:8000/` to use the app. #9999 on Julia Hub
 
 IMPORTANT NOTES:
