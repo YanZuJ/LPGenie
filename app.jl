@@ -246,6 +246,7 @@ end
     @in backlogging_B = Matrix{Float64}(undef,4,24)
     @in idle_U = Matrix{Float64}(undef,4,24)
     @in subcontract_S = Matrix{Float64}(undef,4,24)
+    @in elapsed_time = 0.000
 
     # Initialise start and end date to for dropdown
     @in start_date = "2023-11-30"
