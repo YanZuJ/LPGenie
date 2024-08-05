@@ -375,18 +375,18 @@ end
 
             demand_df = DataFrame(XLSX.readtable(joinpath(FILE_PATH,filename),"demand"))
             num_products_p,time_horizon_T,product_names,demand_D,date_list = read_forecast(demand_df)
-            println(date_list)
+            #println(date_list)
 
             workerproduct_df = DataFrame(XLSX.readtable(joinpath(FILE_PATH,filename),"workerproduct"))
             num_workertype_w, worker_names, productionrate_K = read_workertype(workerproduct_df)
 
             initial_inventory_df = DataFrame(XLSX.readtable(joinpath(FILE_PATH,filename),"initial_inventory"))
             initial_inventory_I0 = Matrix(initial_inventory_df[!,1:end])
-            println(initial_inventory_I0)
+            #println(initial_inventory_I0)
 
             initial_worker_df = DataFrame(XLSX.readtable(joinpath(FILE_PATH,filename),"initial_worker"))
             initial_worker_W0 = Matrix(initial_worker_df[!,1:end])
-            println(initial_worker_W0)
+            #println(initial_worker_W0)
         
             selected_product, selected_worker = product_names[1], worker_names[1] #defaults to first product after uploading  #defaults to first workertype after uploading
         end
