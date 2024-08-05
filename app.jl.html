@@ -53,7 +53,7 @@
                         <q-toggle id="it1mqn" color="negative" label="Disable Backlogging" v-model="disable_backlogging" icon="cancel"></q-toggle>
                     </div>
                     <div class="st-col col-12 col-sm st-module">
-                        <h6 id="idt8m6">Total Costs: <strong id="i4t9qp">{{cost_str}}</strong></h6>
+                        <h6 id="idt8m6">Total Costs: <strong id="i4t9qp" style="color: yellow;">{{cost_str}}</strong></h6>
                     </div>
                 </div>
             </div>
@@ -66,25 +66,25 @@
                             <div class="st-col col-12 col-sm st-module">
                                 <q-icon id="il2bxo" class="text-red" name="group_add" size="xs" color="green"></q-icon>
                                 <h6>Hiring</h6>
-                                <q-input id="i78cd9" type="number" v-model="cost_hiring_cH" :filled="true" :clearable="true" :dense="true" label="Input Hiring cost"></q-input>
+                                <q-input id="i78cd9" type="number" :rules="[val => Number.isInteger(Number(val)) || 'Value must be an integer']" v-model="cost_hiring_cH" :filled="true" :clearable="true" :dense="true" label="Input Hiring cost"></q-input>
                                 <q-slider id="iq83bf" color="primary" :label="true" :max="10000" :min="1" :step="10" v-model="cost_hiring_cH"></q-slider>
                             </div>
                             <div class="st-col col-12 col-sm st-module">
                                 <q-icon id="i4r98t" class="text-red" name="group_off" size="xs" color="red"></q-icon>
                                 <h6>Firing</h6>
-                                <q-input id="ih485l" type="number" v-model="cost_firing_cF" :filled="true" :clearable="true" :dense="true" label="Input Firing cost"></q-input>
+                                <q-input id="ih485l" type="number" :rules="[val => Number.isInteger(Number(val)) || 'Value must be an integer']" v-model="cost_firing_cF" :filled="true" :clearable="true" :dense="true" label="Input Firing cost"></q-input>
                                 <q-slider id="ix80p4" color="primary" :label="true" :max="5000" :min="1" :step="10" v-model="cost_firing_cF"></q-slider>
                             </div>
                             <div class="st-col col-12 col-sm st-module">
                                 <q-icon id="ipwg9h" class="text-red" name="group" size="xs" color="blue"></q-icon>
                                 <h6>Labour</h6>
-                                <q-input id="ivq95j" type="number" v-model="cost_labour_cR" :filled="true" :clearable="true" :dense="true" label="Input Labour cost"></q-input>
+                                <q-input id="ivq95j" type="number" :rules="[val => Number.isInteger(Number(val)) || 'Value must be an integer']" v-model="cost_labour_cR" :filled="true" :clearable="true" :dense="true" label="Input Labour cost"></q-input>
                                 <q-slider id="ibea4t" color="primary" :label="true" :max="5000" :min="1" :step="10" v-model="cost_labour_cR"></q-slider>
                             </div>
                             <div class="st-col col-12 col-sm st-module">
                                 <q-icon id="ifw932" class="text-red" name="timer" size="xs" color="orange"></q-icon>
                                 <h6>Overtime</h6>
-                                <q-input id="ie570r" type="number" v-model="cost_overtime_cO" :filled="true" :clearable="true" :dense="true" label="Input Overtime cost"></q-input>
+                                <q-input id="ie570r" type="number" :rules="[val => Number.isInteger(Number(val)) || 'Value must be an integer']" v-model="cost_overtime_cO" :filled="true" :clearable="true" :dense="true" label="Input Overtime cost"></q-input>
                                 <q-slider id="itk7kn" color="primary" :label="true" :max="5000" :step="10" v-model="cost_overtime_cO" :min="cost_labour_cR"></q-slider>
                             </div>
                         </div>
@@ -92,30 +92,32 @@
                             <div class="st-col col-12 col-sm st-module">
                                 <q-icon id="imibix" class="text-red" name="person_search" size="xs" color="yellow"></q-icon>
                                 <h6>Subcontracting</h6>
-                                <q-input id="i3xpat" type="number" v-model="cost_subcontract_cS" :filled="true" :clearable="true" :dense="true" label="Input Subcontracting cost"></q-input>
+                                <q-input id="i3xpat" type="number" :rules="[val => Number.isInteger(Number(val)) || 'Value must be an integer']" v-model="cost_subcontract_cS" :filled="true" :clearable="true" :dense="true" label="Input Subcontracting cost"></q-input>
                                 <q-slider id="ih06g" color="primary" :label="true" :max="5000" :step="10" v-model="cost_subcontract_cS" :min="cost_labour_cR"></q-slider>
                             </div>
                             <div class="st-col col-12 col-sm st-module">
                                 <q-icon id="i8dioo" class="text-red" name="hourglass_bottom" size="xs" color="red"></q-icon>
                                 <h6>Idle</h6>
-                                <q-input id="i2jhyp" type="number" v-model="cost_idle_cU" :filled="true" :clearable="true" :dense="true" label="Input Idle Cost"></q-input>
+                                <q-input id="i2jhyp" type="number" :rules="[val => Number.isInteger(Number(val)) || 'Value must be an integer']" v-model="cost_idle_cU" :filled="true" :clearable="true" :dense="true" label="Input Idle Cost"></q-input>
                                 <q-slider id="iw4uld" color="primary" :label="true" :max="5000" :min="1" :step="10" v-model="cost_idle_cU"></q-slider>
                             </div>
                             <div class="st-col col-12 col-sm st-module">
                                 <q-icon id="ij2v9b" class="text-red" name="warehouse" size="xs" color="grey"></q-icon>
                                 <h6>Inventory</h6>
-                                <q-input id="ikywom" type="number" v-model="cost_inventory_cI" :filled="true" :clearable="true" :dense="true" label="Input Inventory cost"></q-input>
+                                <q-input id="ikywom" type="number" :rules="[val => Number.isInteger(Number(val)) || 'Value must be an integer']" v-model="cost_inventory_cI" :filled="true" :clearable="true" :dense="true" label="Input Inventory cost"></q-input>
                                 <q-slider id="iljdly" color="primary" :label="true" :max="5000" :min="1" :step="10" v-model="cost_inventory_cI"></q-slider>
                             </div>
                             <div class="st-col col-12 col-sm st-module">
                                 <q-icon id="i8vaat" class="text-red" name="backspace" size="xs" color="purple"></q-icon>
                                 <h6>Backlogging</h6>
-                                <q-input id="iohkal" type="number" v-model="cost_backlogging_cB" :filled="true" :clearable="true" :dense="true" label="Input Backlogging cost" :disable="disable_backlogging"></q-input>
+                                <q-input id="iohkal" type="number" :rules="[val => Number.isInteger(Number(val)) || 'Value must be an integer']" v-model="cost_backlogging_cB" :filled="true" :clearable="true" :dense="true" label="Input Backlogging cost" :disable="disable_backlogging"></q-input>
                                 <q-slider id="ig1d0c" color="primary" :label="true" :max="5000" :min="1" :step="10" v-model="cost_backlogging_cB" :disable="disable_backlogging"></q-slider>
                             </div>
                         </div>
                     </div>
-                    <div class="row"></div>
+                    <div class="row">
+                        <h1></h1>
+                    </div>
                     <div class="row justify-center">
                         <q-btn id="i1a9i" color="primary" text-color="white" icon="timeline" label="Optimise" v-on:click="press_optimise = true" :disable="press_optimise" :loading="press_optimise"></q-btn>
                     </div>

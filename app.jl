@@ -3,10 +3,7 @@ module App
 using GenieFramework
 using JuMP
 using Gurobi
-using HiGHS
 using CSV, DataFrames, XLSX
-using Random
-Random.seed!(1234) # set seed
 using Stipple
 using StippleUI
 using StippleDownloads
@@ -281,8 +278,6 @@ end
     # Initialise upload template as false, when toggled = true in UI
     @in download_template = false
 
-    # @page("/", "app.jl.html")
-    # end
     @onchange disable_backlogging begin
         cost_backlogging_cB = 999999999
     end
@@ -316,14 +311,14 @@ end
     @onchange selected_product,selected_worker, start_date, end_date, optimisation_ready begin
         # filters the production and worker dataframe, and convert each column into a vector (list) corresponding to the filtered values, see Backend.ipynb for more info
         notify(__model__,"Plotting Graphs...")
-        worker_df_copy = deepcopy(worker_df)
+        worker_df_copy = copy(worker_df)
         filter_worker_df = filter!(row -> row.Worker_Type == selected_worker &&  start_date <= row.Date <= end_date, worker_df_copy)
         workerlevel_plot = filter_worker_df.Worker_Level
         hired_plot = filter_worker_df.Workers_Hired
         fired_plot = filter_worker_df.Workers_Fired
         date_list = filter_worker_df.Date
 
-        production_df_copy = deepcopy(production_df)
+        production_df_copy = copy(production_df)
         filter_production_df = filter!(row -> row.Product_Name == selected_product &&  start_date <= row.Date <= end_date, production_df_copy)
         demand_plot = filter_production_df.Demand
         inventory_plot = filter_production_df.Inventory
@@ -389,9 +384,9 @@ end
 
             initial_worker_df = DataFrame(XLSX.readtable(joinpath(FILE_PATH,filename),"initial_worker"))
             initial_worker_W0 = Matrix(initial_worker_df[!,1:end])
-
-            selected_product = product_names[1] #defaults to first product after uploading
-            selected_worker = worker_names[1] #defaults to first workertype after uploading
+            
+            println(worker_names)
+            selected_product, selected_worker = product_names[1], worker_names[1] #defaults to first product after uploading  #defaults to first workertype after uploading
         end
         upfiles = readdir(FILE_PATH)
     end
