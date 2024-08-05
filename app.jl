@@ -120,7 +120,7 @@ function optimise(num_products_p,num_workertype_w,time_horizon_T,demand_D,produc
     for w in 1:num_workertype_w
         for t in 1: time_horizon_T
             @constraint(model, aggregated_workerlevel_Wwt[w,t] == aggregated_workerlevel_Wwt[w, t-1] + hired_H[w,t] - fired_F[w,t])
-            @constraint(model, hired_H[w,t] + fired_F[w,t] <= 0.2*aggregated_workerlevel_Wwt[w,t])   
+            #@constraint(model, hired_H[w,t] + fired_F[w,t] <= 0.2*aggregated_workerlevel_Wwt[w,t])   
         end    
     end
 
@@ -384,8 +384,7 @@ end
 
             initial_worker_df = DataFrame(XLSX.readtable(joinpath(FILE_PATH,filename),"initial_worker"))
             initial_worker_W0 = Matrix(initial_worker_df[!,1:end])
-            
-            println(worker_names)
+        
             selected_product, selected_worker = product_names[1], worker_names[1] #defaults to first product after uploading  #defaults to first workertype after uploading
         end
         upfiles = readdir(FILE_PATH)
