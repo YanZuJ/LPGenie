@@ -18,7 +18,7 @@ This web application takes in product demand forecast over a time horizon, a wor
 
 If you're downloading from Github, clone the repository to a folder.
 
-Please ensure you have Julia installed. Julia can be installed here: https://julialang.org/downloads/ 
+1. Please ensure you have Julia installed. Julia can be installed here: https://julialang.org/downloads/ 
 On Julia itself, run the code below and install the dependencies.
 
 ```bash
@@ -49,19 +49,19 @@ end
 Pkg.build("Gurobi")
 ```
 
-First `cd` into the project directory in Julia by:
+2. First `cd` into the project directory in Julia by:
 
 ```bash
 cd("file\\path\\to\\code") #Note the double \\ and ("")
 ```
 
-Then instantiate the project of its dependencies by
+3. Then instantiate the project of its dependencies by
 
 ```bash
 using Pkg; Pkg.instantiate()
 ```
 
-Finally, run the app
+4. Finally, run the app
 
 ```julia
 using GenieFramework
@@ -69,6 +69,7 @@ Genie.loadapp() # load app
 up() # start server
 ```
 
+To open the application again, please repeat steps 2-4.
 Open your browser and navigate to `http://localhost:8000/` to use the app. On JuliaHub, it will be 9999 instead.
 
 ## Important Notes
