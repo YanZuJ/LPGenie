@@ -58,7 +58,7 @@ cd("file\\path\\to\\code") #Note the double \\ and ("")
 Then instantiate the project of its dependencies by
 
 ```bash
-using Pkg; Pkg.instantiate()'
+using Pkg; Pkg.instantiate()
 ```
 
 Finally, run the app
