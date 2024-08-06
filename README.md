@@ -74,6 +74,7 @@ Open your browser and navigate to `http://localhost:8000/` to use the app. On Ju
 
 ## Important Notes
 - This app uses a WLS Academic Gurobi License which expires on September. 2024 Replace gurobi.lic with another valid WLS Academic license gurobi.lic to continue using the application after expiry period.
+- This folder includes a UploadTemplateFinal.xlsx which contains test data to upload into the application. 
 
 ## Credits
 - Tan Yan Zu, Joe
