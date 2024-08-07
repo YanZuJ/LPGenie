@@ -58,7 +58,7 @@ cd("C:\\file\\path\\to\\code\\LPGenie") #Note the double \\ and ("")
 3. For Gurobi specifically, the GRB_LICENSE_FILE environment variable have to be pointed to the `gurobi.lic` file in LPGenie folder.
 
 ```bash
-cd("ENV["GRB_LICENSE_FILE"] = "C:\\file\\path\\to\\code\\LPGenie\\gurobi.lic")
+ENV["GRB_LICENSE_FILE"] = "C:\\file\\path\\to\\code\\LPGenie\\gurobi.lic"
 ```
 
 3. Then instantiate the project of its dependencies by
