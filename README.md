@@ -59,6 +59,7 @@ cd("C:\\file\\path\\to\\code\\LPGenie") #Note the double \\ and ("")
 
 ```bash
 cd("ENV["GRB_LICENSE_FILE"] = "C:\\file\\path\\to\\code\\LPGenie\\gurobi.lic")
+```
 
 3. Then instantiate the project of its dependencies by
 
@@ -79,7 +80,7 @@ Open your browser and navigate to `http://localhost:8000/` to use the app. On Ju
 
 ## Important Notes
 - This app uses a WLS Academic Gurobi License which expires on September. 2024 Replace gurobi.lic with another valid WLS Academic license gurobi.lic to continue using the application after expiry period.
-- This folder includes a UploadTemplateFinal2.xlsx which contains test data to upload into the application.
+- This folder includes a UploadTemplateFinal.xlsx which contains test data to upload into the application.
 - This web application allows you to deploy online and it will be accessible via a link on JuliaHub. When deploying, **charges will apply.** Our JuliaHub repsository can be found here: https://juliahub.com/ui/Projects/b3766e7a-9051-4568-99de-dadd00abc8e4/138840a2-88ef-4f32-b6e8-a4951841a968.
 To deploy, switch to Source -> Connect. **Ensure you have input your payment details in JuliaHub before deploying.**
 - This folder includes trialangela.ipynb and trialjoe.ipynb as backend workings for our testings. You may ignore these files
