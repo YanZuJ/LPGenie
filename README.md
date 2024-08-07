@@ -61,13 +61,13 @@ cd("C:\\file\\path\\to\\code\\LPGenie") #Note the double \\ and ("")
 ENV["GRB_LICENSE_FILE"] = "C:\\file\\path\\to\\code\\LPGenie\\gurobi.lic"
 ```
 
-3. Then instantiate the project of its dependencies by
+4. Then instantiate the project of its dependencies by
 
 ```bash
 using Pkg; Pkg.instantiate()
 ```
 
-4. Finally, run the app
+5. Finally, run the app
 
 ```julia
 using GenieFramework
@@ -75,8 +75,8 @@ Genie.loadapp() # load app
 up() # start server
 ```
 
-To open the application again, please repeat steps 2-4.
-Open your browser and navigate to `http://localhost:8000/` to use the app. On JuliaHub, it will be 9999 instead.
+To open the application again, please repeat steps 3-5
+Open your browser and navigate to `http://localhost:8000/` to use the app. 
 
 ## Important Notes
 - This app uses a WLS Academic Gurobi License which expires on September. 2024 Replace gurobi.lic with another valid WLS Academic license gurobi.lic to continue using the application after expiry period.
