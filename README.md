@@ -52,7 +52,7 @@ Pkg.build("Gurobi")
 2. First `cd` into the project directory in Julia by:
 
 ```bash
-cd("file\\path\\to\\code") #Note the double \\ and ("")
+cd("file\\path\\to\\code\\LPGenie") #Note the double \\ and ("")
 ```
 
 3. Then instantiate the project of its dependencies by
