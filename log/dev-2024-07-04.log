@@ -1,0 +1,26 @@
+┌ Info: 2024-07-04 21:41:34 Watching ["/Users/sherman/Documents/GitHub/LPGenie"]
+└ @ GenieAutoReload /Users/sherman/.julia/packages/GenieAutoReload/ESvsh/src/GenieAutoReload.jl:19
+┌ Info: 2024-07-04 21:41:34 Autoreloading
+└ @ GenieAutoReload /Users/sherman/.julia/packages/GenieAutoReload/ESvsh/src/GenieAutoReload.jl:22
+┌ Info: 2024-07-04 21:41:38 Watching ["/Users/sherman/Documents/GitHub/LPGenie"]
+└ @ GenieAutoReload /Users/sherman/.julia/packages/GenieAutoReload/ESvsh/src/GenieAutoReload.jl:19
+┌ Warning: 2024-07-04 21:41:39 Handlers already registered
+└ @ Genie.Watch /Users/sherman/.julia/packages/Genie/ddmhZ/src/Watch.jl:52
+┌ Info: 2024-07-04 21:41:40 
+│ Web Server starting at http://0.0.0.0:9101?CHANNEL__=XUEBEDEQUBMHIONUDUZWQOUGBHDJEUEV 
+└ @ Genie.Server /Users/sherman/.julia/packages/Genie/ddmhZ/src/Server.jl:182
+┌ Info: 2024-07-04 21:41:40 Listening on: 0.0.0.0:9101, thread id: 1
+└ @ HTTP.Servers /Users/sherman/.julia/packages/HTTP/sJD5V/src/Servers.jl:382
+┌ Info: 2024-07-04 21:50:26 Watching ["/Users/sherman/Documents/GitHub/LPGenie"]
+└ @ GenieAutoReload /Users/sherman/.julia/packages/GenieAutoReload/ESvsh/src/GenieAutoReload.jl:19
+┌ Info: 2024-07-04 21:50:26 Autoreloading
+└ @ GenieAutoReload /Users/sherman/.julia/packages/GenieAutoReload/ESvsh/src/GenieAutoReload.jl:22
+┌ Info: 2024-07-04 21:50:30 Watching ["/Users/sherman/Documents/GitHub/LPGenie"]
+└ @ GenieAutoReload /Users/sherman/.julia/packages/GenieAutoReload/ESvsh/src/GenieAutoReload.jl:19
+┌ Warning: 2024-07-04 21:50:31 Handlers already registered
+└ @ Genie.Watch /Users/sherman/.julia/packages/Genie/ddmhZ/src/Watch.jl:52
+┌ Info: 2024-07-04 21:50:32 
+│ Web Server starting at http://0.0.0.0:9101?CHANNEL__=XUEBEDEQUBMHIONUDUZWQOUGBHDJEUEV 
+└ @ Genie.Server /Users/sherman/.julia/packages/Genie/ddmhZ/src/Server.jl:182
+┌ Info: 2024-07-04 21:50:32 Listening on: 0.0.0.0:9101, thread id: 1
+└ @ HTTP.Servers /Users/sherman/.julia/packages/HTTP/sJD5V/src/Servers.jl:382
